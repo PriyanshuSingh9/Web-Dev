@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bookmarks Demo — onclick vs addEventListener</title>
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+<h1>Bookmarks demo — left: <em>onclick</em>, right: <em>addEventListener</em></h1>
+<p class="small">Both panels store bookmarks in <code>localStorage</code>. Try adding, opening, deleting — data persists in your browser.</p>
+
+<div class="container">
+
+    <!-- ONCLICK VERSION -->
+    <section class="card">
+        <h2>1) Using <code>onclick</code> property</h2>
+        <div class="note small">This panel uses a button with an <code>onclick="..."</code> attribute and explicit element.<br>Storage key: <code>bookmarks_onclick</code></div>
+
+        <label for="titleOnclick">Site title</label>
+        <input id="titleOnclick" type="text" placeholder="Example: MDN Web Docs" />
+
+        <label for="urlOnclick">Site URL</label>
+        <input id="urlOnclick" type="text" placeholder="https://developer.mozilla.org/" />
+
+        <!-- button calls function via onclick attribute -->
+        <button class="btn primary" onclick="addBookmarkOnclick(event)">Add bookmark</button>
+        <button class="btn" onclick="clearOnclickStorage()">Clear all</button>
+
+        <h3 style="margin-top:14px">Your bookmarks</h3>
+        <ul id="listOnclick"></ul>
+        <footer class="small">Tip: URLs must start with <code>http</code> to open in a new tab reliably.</footer>
+    </section>
+
+    <!-- addEventListener VERSION -->
+    <section class="card">
+        <h2>2) Using <code>addEventListener</code></h2>
+        <div class="note small">This panel attaches events with <code>addEventListener</code>, allowing multiple handlers and separation of concerns.<br>Storage key: <code>bookmarks_listener</code></div>
+
+        <label for="titleListener">Site title</label>
+        <input id="titleListener" type="text" placeholder="Example: Stack Overflow" />
+
+        <label for="urlListener">Site URL</label>
+        <input id="urlListener" type="text" placeholder="https://stackoverflow.com/" />
+
+        <div style="margin-top:8px">
+            <button id="addListenerBtn" class="btn primary">Add bookmark</button>
+            <button id="clearListenerBtn" class="btn">Clear all</button>
+        </div>
+
+        <h3 style="margin-top:14px">Your bookmarks</h3>
+        <ul id="listListener"></ul>
+        <footer class="small">This pattern is preferred in modern apps.</footer>
+    </section>
+</div>
+</body>
+<script src="test.js"></script>
+</html>

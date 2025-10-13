@@ -1,0 +1,52 @@
+/* Google font optional */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+body {
+    background: black;
+    font-family: 'Share Tech Mono', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Outer box for traffic light */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1c1b1b;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 25vw;
+    max-width: 200px;
+    min-width: 120px;
+    height: 40vh;
+    max-height: 400px;
+    min-height: 250px;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+/* Countdown display */
+.cnt_dwn {
+    background-color: grey;
+    width: 97%;
+    border-radius: 1rem;
+    color: white;
+    font-size: clamp(1.5rem, 5vw, 3rem); /* responsive scaling */
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Light housing */
+.light {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+

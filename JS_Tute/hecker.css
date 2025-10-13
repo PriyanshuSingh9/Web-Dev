@@ -1,0 +1,8 @@
+body {
+    background: #000;
+    color: #0f0;
+    font-family: monospace;
+    padding: 20px;
+    line-height: 1.4;
+}
+div { white-space: pre; }

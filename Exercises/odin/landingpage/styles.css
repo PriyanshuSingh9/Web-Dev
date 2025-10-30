@@ -61,3 +61,32 @@ h1{
     font-size: 18px;
 }
 
+.display{
+    display: flex;
+    background-color: rgba(203, 229, 251, 0.104);
+    justify-content: space-evenly;
+}
+h2{
+    text-align: center;
+    color: rgba(0, 0, 0, 0.75);
+    margin: 10px 0px;
+}
+.car{
+    max-width: 335px;
+    text-align: left;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 16px;
+}
+
+.quote{
+    background-color: #1f2937;
+    color: #E5E7EB;
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    padding: 10px;
+}
+
+
+

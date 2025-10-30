@@ -7,6 +7,7 @@
     box-sizing: border-box;
 }
 
+
 ul{
     display: flex;
     list-style: none;
@@ -32,6 +33,7 @@ header{
     display: flex;
     width: 120px;
     margin:  8px 32px;
+    align-items: center;
 }
 .left{
     margin:  8px 32px;
@@ -63,8 +65,9 @@ h1{
 
 .display{
     display: flex;
-    background-color: rgba(203, 229, 251, 0.104);
+    background-color: rgba(203, 229, 251, 0.15);
     justify-content: space-evenly;
+    
 }
 h2{
     text-align: center;
@@ -86,6 +89,13 @@ h2{
     font-weight: 800;
     text-align: center;
     padding: 10px;
+}
+
+footer{
+    background-color: #1f2937;
+    color: #E5E7EB;
+    text-align: end;
+    padding-right: 16px;
 }
 
 

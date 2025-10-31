@@ -1,30 +1,40 @@
+//Object to map user choice to an integer to perform battle mechanisms later
 let choice={
     0:"rock",
     1:"paper",
     2:"scissor"
 }
 
+//Function to take random move
 function computerChoice(){
     let input=Math.floor(Math.random()*3)
     return input
 }
 
+//Function to take user input
 function userChoice(){
-    let input =prompt("Choose your move")
-    for (const key in choice) {
-        if(input==choice[key]){
-            console.log("\n")
-            return key
+    while (true) {
+        let input = prompt("Choose your move: rock, paper, or scissor").toLowerCase();
+
+        for (const key in choice) {
+            if (input === choice[key]) {
+                console.log("\n");
+                return parseInt(key);
+            }
         }
+
+        console.log("❌ Invalid choice! Please enter 'rock', 'paper', or 'scissor'.\n");
     }
 }
 
+//Function to display round information
 function display(user,comp){
     console.log(`You chose: ${choice[user]}.`)
     console.log(`The Computer chose: ${choice[comp]}`)
     console.log("\n")
 }
 
+//Complete battle mechanism
 function versus(){
     let winCount=0
     let lossCount=0
@@ -60,4 +70,5 @@ function versus(){
     }
 }
 
+//Calling versus() to begin execution of the complete program
 versus()

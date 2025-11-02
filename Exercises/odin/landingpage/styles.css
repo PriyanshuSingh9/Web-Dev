@@ -3,7 +3,7 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: poppins,sas;
+    font-family: poppins,sans-serif;
     box-sizing: border-box;
 }
 
@@ -97,6 +97,3 @@ footer{
     text-align: end;
     padding-right: 16px;
 }
-
-
-

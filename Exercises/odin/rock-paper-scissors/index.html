@@ -15,11 +15,15 @@
     </header>
     <div id="container">
         <div class="control">
-            <div class="count">Wins:</div>
+            <div class="userCount"><ul>
+                    <li>Wins:</li>
+                    <li class="userCounter"></li>
+                </ul>
+            </div>
 
             <div class="player">
-                <div class="name">USER</div>
-                <div class="moves">
+                <div class="nameUser">USER</div>
+                <div class="userMoves">
                     <div class="move rock">
                         <img src="assets/hand.png" alt="rock">
                     </div>
@@ -34,16 +38,21 @@
         </div>
 
         <div id="battle-board">
-            <div id="result">You Won!!!</div>
+            <div id="result">-------</div>
             <div id="vs">V/S</div>
         </div>
 
         <div class="control">
-            <div class="count">Wins:</div>
+            <div class="compCount">
+                <ul>
+                    <li>Wins:</li>
+                    <li class="compCounter"></li>
+                </ul>
+            </div>
 
             <div class="player">
-                <div class="name">COMPUTER</div>
-                <div class="moves">
+                <div class="nameComp">COMPUTER</div>
+                <div class="computerMoves">
                     <div class="move rock">
                         <img src="assets/hand.png" alt="rock">
                     </div>
@@ -61,7 +70,7 @@
 
     <footer>© 2nd November 2025</footer>
 
-    <!-- <script src="scripts.js"></script> -->
+    <script src="scripts_gui.js"></script>
 </body>
 
 </html>

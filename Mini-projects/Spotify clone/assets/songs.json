@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Aaj Ki Raat",
+    "description": "Divya Kumar",
+    "path": "assets/songs/aaj-ki-raat",
+    "cover-path":"assets/songs/aaj-ki-raat/cover.jpeg",
+    "track":"assets/songs/aaj-ki-raat/aaj-ki-raat.mp3",
+    "nonce":"1"
+  },
+  {
+    "title": "Franchise",
+    "description": "Travis Scott",
+    "path": "assets/songs/franchise",
+    "cover-path":"assets/songs/franchise/cover.jpeg",
+    "track":"assets/songs/franchise/franchise.mp3",
+    "nonce":"2"
+  },
+  {
+    "title": "Millionare",
+    "description": "Honey Singh",
+    "path": "assets/songs/millionare",
+    "cover-path":"assets/songs/millionare/cover.jpeg",
+    "track":"assets/songs/millionare/millionare.mp3",
+    "nonce":"3"
+  },
+  {
+    "title": "Ranjhanna",
+    "description": "A.R Rahman",
+    "path": "assets/songs/ranjhanna",
+    "cover-path":"assets/songs/ranjhanna/cover.jpeg",
+    "track":"assets/songs/ranjhanna/ranjhanna.mp3",
+    "nonce":"4"
+  }
+]

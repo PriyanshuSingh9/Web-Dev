@@ -171,3 +171,29 @@ header{
     background-color: black;
 }
 
+
+
+/* Songs */
+.songs{
+    display: flex;
+    margin: 2rem 0 1rem 2.5rem;
+    gap: 1rem;
+}
+.song{
+    position: relative;
+}
+
+.song img{
+    width: 150px;
+    height: 150px;
+    border-radius: 4px;
+    margin: 2px;
+}
+.song div{
+    color: white;
+}
+.song .artist{
+    font-size: 12px;
+    color: #b1b1b1;
+}
+

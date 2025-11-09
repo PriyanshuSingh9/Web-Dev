@@ -230,4 +230,6 @@ header{
     font-size: 12px;
     color: #b1b1b1;
 }
-
+.time-display{
+    color: white;
+}

@@ -85,10 +85,10 @@ function togglePlay(){
 
 function updatePlayIcon(){
     if(isPlaying){
-        playBtn.src="assets\icons8-pause-50.png"
+        playBtn.src="assets/icons8-pause-50.png"
     }
     else{
-        playBtn.src="assets\icons8-play-30.png"
+        playBtn.src="assets/icons8-play-30.png"
     }
 }
 

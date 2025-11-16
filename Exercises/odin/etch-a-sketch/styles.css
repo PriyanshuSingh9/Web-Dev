@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.88);
+
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+
+    background-color: rgba(101, 175, 236, 0.603);
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* padding: 100px; */
+    background-color: rgba(240, 240, 240, 0.647);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    height: fit-content;
+    width: 70vw;
+
+    background-color: rgba(215, 215, 215, 0.808);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+    margin: 1rem 0;
+}
+
+.options>div {
+    height: fit-content;
+    width: fit-content;
+    margin: 1.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    background-color: rgba(255, 166, 1, 0.842);
+}
+
+.board {
+    display: flex;
+
+    background-color: white;
+    height: 450px;
+    width: 450px;
+}
+
+
+/* input styles */
+.size-container {
+    width: 55vw;
+    padding-left: 10px;
+    margin-right: 5px;
+}
+
+.size-container p {
+    color: white;
+    font-size: 18px;
+    font-family: Audiowide, cursive;
+    text-align: center;
+    margin: 7px 0;
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: inherit;
+    width: 100%;
+    height: 15px;
+    background: rgba(255, 166, 1, 0.842);
+    outline: none;
+    transform: rotate(180deg);
+    transition: 0.2s;
+    border-radius: 7px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background: rgb(101, 175, 236);
+    border-radius: 50%;
+    cursor: pointer;
+}

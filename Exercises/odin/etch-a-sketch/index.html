@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-a-Sketch</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Etch-a-Sketch</h1>
+    <div class="main">
+        <div class="options">
+            <div class="paint">Paint</div>
+            <div class="erase">Erase</div>
+            <div class="clear">Clear</div>
+        </div>
+        <div class="container">
+            <div class="board"></div>
+            <div class="size-container">
+                <p>Pixel Size</p>
+                <input type="range" min="4" max="100" value="15" id="sizeRange" class="slider">
+                <p>Smallest to Largest</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

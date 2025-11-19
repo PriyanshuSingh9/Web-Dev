@@ -29,7 +29,21 @@ function paintMode() {
         });
     });
 }
-
+function eraseMode() {
+    let cells = document.querySelectorAll('.cell');
+    cells.forEach((cell) => {
+        cell.addEventListener('mouseover', () => {
+            cell.style.backgroundColor = "white";
+        });
+    });
+}
+function clearGrid() {
+    let cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.style.backgroundColor = "white";
+        // turn off paint and erase mode
+    })
+}
 let options = document.querySelector('.options');
 options.addEventListener('click', (e) => {
     let target = e.target.classList;
@@ -49,5 +63,3 @@ options.addEventListener('click', (e) => {
 
 // range event listener
 
-
-// hover event listener

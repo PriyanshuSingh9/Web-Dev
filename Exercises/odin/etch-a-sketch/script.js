@@ -16,11 +16,21 @@ function createGrid(size) {
     }
 }
 
+function randomRGB() {
+    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
+}
 createGrid(16);
 function paintMode() {
+    let cells = document.querySelectorAll('.cell');
+    console.log("loda")
+    cells.forEach((cell) => {
+        cell.addEventListener('mouseover', () => {
+            cell.style.backgroundColor = randomRGB();
+        });
+    });
 }
 
-let options = document.querySelector('options');
+let options = document.querySelector('.options');
 options.addEventListener('click', (e) => {
     let target = e.target.classList;
     if (target.contains("paint")) {

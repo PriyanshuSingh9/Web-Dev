@@ -1,11 +1,12 @@
 function createGrid(size) {
     const container = document.querySelector('.board');
-    for (let r = 0; r < size; r++) {
+    container.innerHTML = "";
+    for (let i = 0; i < size; i++) {
         const row = document.createElement('div');
         row.style.height = `${container.clientHeight / size}px`
         row.style.width = `${container.clientWidth}px`
         row.classList.add('row');
-        for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
             const cell = document.createElement('div');
             cell.classList.add('cell');
             cell.style.height = `${container.clientHeight / size}px`;
@@ -62,4 +63,8 @@ options.addEventListener('click', (e) => {
 });
 
 // range event listener
-
+const slider = document.querySelector("input");
+slider.addEventListener('input', (e) => {
+    let size = e.target.value;
+    createGrid(size);
+})

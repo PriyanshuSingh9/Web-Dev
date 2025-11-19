@@ -101,7 +101,6 @@ h1 {
     height: 15px;
     background: rgba(255, 166, 1, 0.842);
     outline: none;
-    transform: rotate(180deg);
     transition: 0.2s;
     border-radius: 7px;
 }

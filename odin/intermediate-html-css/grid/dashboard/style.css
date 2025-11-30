@@ -21,21 +21,43 @@ li {
 
 /* Header styles */
 header {
-    display: flex;
     grid-area: header;
+    display: flex;
     justify-content: space-around;
     align-self: center;
+    padding: 0 2rem;
 }
 
 .welcome {
     display: flex;
     justify-content: space-around;
-    gap: 20px;
+    align-items: center;
+    gap: 1rem;
 }
 
 .nav-pfp {
-    width: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    object-fit: cover;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search input {
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    width: 450px;
+}
+
+.nav-img,
+.menu-img {
+    width: 18px;
 }
 
 /* Sidebar styles */
@@ -44,14 +66,90 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: 1.5rem 1rem;
+    gap: 2rem;
 }
 
-.nav-img,
-.menu-img {
-    width: 15px;
+.menu-one {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.2rem;
 }
+
+.menu-two ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu-two a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
 
 /* Main Styles */
 .main {
     grid-area: main;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "cards authors"
+        "cards announcements";
+    gap: 1.5rem;
+    padding: 1.5rem 2rem 2rem 2rem;
+}
+
+.cards {
+    grid-area: cards;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 1rem;
+}
+
+.card {
+    background-color: antiquewhite;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card .name {
+    font-weight: 700;
+}
+
+.card .quote {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.author-list {
+    grid-area: authors;
+    grid-area: authors;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.author {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    min-height: 50px;
+}
+
+.announcement {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    min-height: 50px;
 }

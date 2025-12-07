@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up form</title>
+</head>
+
+<body>
+    <form action="example.com/path" method="get">
+        <!-- label is used to assosiate with the input bar for assisted users -->
+        <label for="first_name">First name:</label>
+        <!-- Labels accept a for attribute, which associates it with a particular input. The input we want to associate with a label
+        needs an id attribute with the same value as the label’s for attribute. -->
+        <!-- Form input should always have a name attribute; otherwise, it will be ignored when the form is submitted.-->
+        <input type="text" id="first_name" name="first_name" placeholder="choco...">
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob">
+        <textarea></textarea>
+
+        <!-- All the option elements should have a value attribute (otherwise the text content inside is used). 
+         This value will be sent to the server when the form is submitted. -->
+        <select name="fashion">
+            <optgroup label="Clothing">
+                <option value="t_shirt">T-Shirts</option>
+                <option value="sweater">Sweaters</option>
+                <option value="coats">Coats</option>
+            </optgroup>
+            <optgroup label="Foot Wear">
+                <option value="sneakers">Sneakers</option>
+                <option value="boots">Boots</option>
+                <option value="sandals">Sandals</option>
+            </optgroup>
+        </select>
+    </form>
+</body>
+
+</html>

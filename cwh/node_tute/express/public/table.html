@@ -64,6 +64,14 @@ width/height are used to change image dimensions only one can be defined and oth
         <dd>Sanji</dd>
     </dl>
 
+    <script>
+        async function testPost() {
+            let a = await fetch('/table.html', { method: 'POST' })
+            let b = await a.text()
+            console.log(b)
+        }
+        testPost()
+    </script>
 </body>
 
 </html>

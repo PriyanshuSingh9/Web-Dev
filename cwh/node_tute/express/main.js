@@ -1,5 +1,10 @@
 // import express package
 const express = require("express")
+// import the blog routee
+// routes are used to decrease code complexity and breaks down
+// code into modules that many people can work at once 
+const blog = require('./routes/blog')
+
 // declare app as an express object
 const app = express()
 // setup server at localhost:3000
@@ -8,7 +13,7 @@ const port = 3000
 
 // using middleware to statically share a page on the web
 app.use(express.static('public'))
-
+app.use("/blog", blog)
 // program how the app respnds when user requests home page
 app.get('/', (request, response) => {
     console.log('this is a get request')

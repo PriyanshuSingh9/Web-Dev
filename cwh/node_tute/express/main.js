@@ -21,6 +21,12 @@ app.get('/:slug', (req, res) => {
     res.send(`welcome to ${req.params.slug}`)
 })
 
+// to render an html page itself by sending a file
+app.get('/index', (req, res) => {
+    res.sendFile('/templates/index.html', { root: __dirname })
+})
+
+// program how the app respnds when user sends post table.html page
 app.post('/table.html', (req, res) => {
     console.log('this is a post request')
     res.send("Hello World post")

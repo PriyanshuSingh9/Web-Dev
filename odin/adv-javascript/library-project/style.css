@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     color: rgba(0, 0, 0, 0.88);
+
     font-family: 'Poppins', sans-serif;
 }
 
@@ -11,7 +12,17 @@
 body {
     display: flex;
     flex-direction: column;
+
     height: 100vh;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 80% 20%;
+    grid-template-areas:
+        "add content"
+        "footer footer";
 }
 
 /* Header */
@@ -19,61 +30,55 @@ h1 {
     text-align: center;
     padding: 20px 0;
     color: antiquewhite;
+
     background-color: saddlebrown;
 }
 
-/* Main container: left = add form, right = content */
-.container {
-    flex: 1;
-    /* take remaining height below header */
-    display: grid;
-    grid-template-columns: 30% 70%;
-    grid-template-rows: 1fr auto;
-    /* main area + footer */
-    grid-template-areas:
-        "add content"
-        "footer footer";
-}
-
-/* Left panel: Add book section */
 .add {
     grid-area: add;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    /* min-height: 100%;
+    flex-grow: 1; */
     background-color: saddlebrown;
-    color: #f9f9f9;
 }
 
+/* Add book section */
 .add-form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
 
-/* Form elements */
-form>div {
-    margin: 5px 0;
 }
 
 label {
+    /* Uniform size & alignment */
     display: inline-block;
     min-width: 150px;
     text-align: left;
-    margin-bottom: 4px;
 }
 
-input,
-select {
+input {
+    /* To make sure that all text fields have the same font settings
+         By default, text areas have a monospace font */
     font: 1em sans-serif;
-    width: 100%;
+    /* Uniform text field size */
+    width: 300px;
     box-sizing: border-box;
+    /* Match form field borders */
     border: 1px solid #999999;
-    padding: 4px 8px;
 }
 
-input:focus,
-select:focus {
+input:focus {
+    /* Set the outline width and style */
     outline-style: solid;
+    /* To give a little highlight on active elements */
     outline-color: black;
+}
+
+form>div {
+    margin: 5px;
+}
+
+.details {
+    max-width: 10%;
 }

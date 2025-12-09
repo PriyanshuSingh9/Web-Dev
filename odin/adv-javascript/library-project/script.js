@@ -1,3 +1,9 @@
+let library = document.querySelector(".library")
+console.log(library)
+let addbtn = document.querySelector(".addbtn")
+let details = document.querySelectorAll(".details")
+console.log(details[0].value, details[1], details[2], details[3])
+
 const myLibrary = [
     {
         id: crypto.randomUUID(),
@@ -29,6 +35,50 @@ const myLibrary = [
     }
 ];
 
+addbtn.addEventListener("click", (e) => {
+    e.preventDefault();                     // prevent form refresh on button click
+
+    const title = details[0].value.trim();
+    const author = details[1].value.trim();
+    const pages = details[2].value.trim();
+    const status = details[3].value.trim();
+
+    // validation: do not add book if any field is empty
+    if (title === "" || author === "" || pages === "" || status === "") {
+        alert("All fields are required");
+        return;
+    }
+
+    addBookToLibrary(title, author, pages, status);
+
+    // clear input fields after submission
+    details[0].value = "";
+    details[1].value = "";
+    details[2].value = "";
+    details[3].value = "";
+});
+
+function display(book) {
+    let card = document.createElement("li")
+    card.classList.add("book")
+    let name = document.createElement("h3")
+    let author = document.createElement("div")
+    let pages = document.createElement("div")
+    let status = document.createElement("div")
+
+    name.textContent = `${book.title}`
+    author.textContent = `Author : ${book.author}`
+    pages.textContent = ` Pages : ${book.pages}`
+    status.textContent = `Status : ${book.status}`
+
+    card.appendChild(name)
+    card.appendChild(author)
+    card.appendChild(pages)
+    card.appendChild(status)
+
+    library.appendChild(card)
+}
+
 
 function Book(title, author, pages, status) {
     if (!new.target) {
@@ -43,5 +93,10 @@ function Book(title, author, pages, status) {
 
 function addBookToLibrary(title, author, pages, status) {
     const book = new Book(title, author, pages, status);
+    display(book)
     myLibrary.push(book);
 }
+
+myLibrary.forEach(book => {
+    addBookToLibrary(book.title, book.author, book.pages, book.status)
+})

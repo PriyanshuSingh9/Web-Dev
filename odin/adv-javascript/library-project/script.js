@@ -1,8 +1,6 @@
 let library = document.querySelector(".library")
-console.log(library)
 let addbtn = document.querySelector(".addbtn")
 let details = document.querySelectorAll(".details")
-console.log(details[0].value, details[1], details[2], details[3])
 
 const myLibrary = [
     {

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import express from "express";
 
-// import employee from "./models/dummy"
+import { Employee } from "./models/dummy.js"
 
-let client = await mongoose.connect("mongodb://localhost:27017/")
+let client = await mongoose.connect("mongodb://localhost:27017/Company")
 let app = express()
 let port = 3000
 
@@ -48,15 +48,15 @@ const cities = [
 ];
 
 
-function name() {
+function getName() {
     const first = names[Math.floor(Math.random() * names.length)];
     const last = surnames[Math.floor(Math.random() * surnames.length)];
     return (`${first} ${last}`);
 }
-function city() {
+function getCity() {
     return cities[Math.floor(Math.random() * cities.length)]
 }
-function salary() {
+function getSalary() {
     return (10000 * (1 + Math.floor(Math.random() * 10)))
 }
 function manager(salary) {
@@ -69,12 +69,24 @@ function manager(salary) {
 }
 
 app.get('/', (req, res) => {
-    res.sendFile('index', { root: "public" })
+    res.sendFile('index.html', { root: "public" })
 })
 
 app.post('/', async (req, res) => {
-    for (let i = 0; i <= 10; i++) {
-
+    try {
+        const arr = []
+        for (let i = 0; i < 10; i++) {
+            const salary = getSalary()
+            const employee = { name: getName(), city: getCity(), salary: salary, isManager: manager(salary) }
+            // await employee.save()
+            // instead of using employee.save to add to the database one by one we use an array and insertMany
+            arr.push(employee)
+        }
+        const inserted = await Employee.insertMany(arr)
+        res.status(201).json({ message: "Inserted 10 employees", count: inserted.length });
+    } catch (err) {
+        console.error("Insert error:", err);
+        res.status(500).json({ error: "Failed to insert employees" });
     }
 })
 

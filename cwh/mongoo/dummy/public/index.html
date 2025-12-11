@@ -8,9 +8,18 @@
 </head>
 
 <body>
-    <form method="post">
-        <button>generate data</button>
-    </form>
+    <button>generate data</button>
+    <script>
+        let btn = document.body.querySelector("button")
+        btn.addEventListener("click", async () => {
+            try {
+                await fetch("/", { method: "POST" });
+                alert("Data generated!");
+            } catch (err) {
+                alert("Error generating data");
+            }
+        })
+    </script>
 </body>
 
 </html>

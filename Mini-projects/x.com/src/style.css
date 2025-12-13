@@ -1,0 +1,69 @@
+/* CSS Resets */
+@font-face {
+    font-family: "chirp";
+    /* name you choose */
+    src: url("../assets/fonts/chirp-regular-web.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: black;
+    color: white;
+    font-family: "chirp";
+
+}
+
+li {
+    list-style: none;
+}
+
+/* MAIN BODY */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "left center right";
+
+    margin: 10px 100px;
+}
+
+/* LEFT SECTION */
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    grid-area: left;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-item>img,
+.menu-item>svg {
+    width: 28px;
+    height: auto;
+}
+
+/* CENTER SECTION */
+.center {
+    grid-area: center;
+}
+
+/* RIGHT SECTION */
+.right {
+    grid-area: right;
+}

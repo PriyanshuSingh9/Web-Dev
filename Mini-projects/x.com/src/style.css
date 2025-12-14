@@ -1,18 +1,31 @@
-/* CSS Resets */
 @font-face {
-    font-family: "chirp-regular";
-    /* name you choose */
+    font-family: "chirp";
     src: url("../assets/fonts/chirp-regular-web.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "chirp";
+    src: url("../assets/fonts/chirp-medium-web.woff") format("woff");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "chirp-medium";
-    /* name you choose */
-    src: url("../assets/fonts/chirp-medium-web.woff") format("woff");
-    font-weight: 500;
+    font-family: "chirp";
+    src: url("../assets/fonts/chirp-bold-web.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "chirp";
+    src: url("../assets/fonts/chirp-heavy-web.woff") format("woff");
+    font-weight: 800;
     font-style: normal;
     font-display: swap;
 }
@@ -23,12 +36,6 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: black;
-    color: white;
-    font-family: "chirp-regular";
-}
-
 li {
     list-style: none;
 }
@@ -37,17 +44,13 @@ li {
 body {
     margin: 0;
     min-height: 100vh;
+    background-color: black;
+    color: white;
+    font-family: "chirp", system-ui, sans-serif;
+    font-weight: 400;
 
     display: grid;
-    grid-template-columns:
-        1fr
-        /* left gutter */
-        minmax(0, 1260px)
-        /* content */
-        1fr;
-    /* right gutter */
-
-    background: black;
+    grid-template-columns: 1fr minmax(0, 1260px) 1fr;
 }
 
 /* MAIN BODY */
@@ -85,6 +88,7 @@ body {
     gap: 18px;
 
     font-size: 22px;
+    font-weight: 300;
 }
 
 .menu-item>img,
@@ -94,7 +98,11 @@ body {
 }
 
 .left>button {
-    font-family: "chirp-medium";
+
+    font-family: inherit;
+    font-weight: 700;
+
+
     padding: 4px 32px;
     width: 240px;
     height: 60px;
@@ -130,13 +138,14 @@ body {
 }
 
 .composer {
-    border-bottom: 1px solid rgb(47, 51, 54);
+    border-bottom: 1px solid rgb(54, 59, 63);
     padding: 12px 16px;
 }
 
 .composer-top {
     display: flex;
     gap: 12px;
+    align-items: flex-start;
 }
 
 .avatar {
@@ -147,6 +156,7 @@ body {
 
 .composer-input {
     flex: 1;
+    padding-top: 6px;
 }
 
 .composer-input textarea {
@@ -162,32 +172,20 @@ body {
     font-family: inherit;
 }
 
-.reply-setting {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: rgb(29, 155, 240);
-    font-size: 14px;
-    margin-top: 8px;
-}
-
-.reply-setting svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-}
-
 .composer-actions {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding-top: 12px;
-    border-top: 1px solid rgb(47, 51, 54);
     margin-top: 12px;
+    border-bottom: 1px solid rgb(54, 59, 63);
+
+    position: relative;
+    bottom: 10px;
 }
 
 .icons {
     display: flex;
+    align-items: center;
     gap: 14px;
     color: rgb(29, 155, 240);
 }
@@ -196,11 +194,11 @@ body {
     width: 20px;
     height: 20px;
     fill: currentColor;
-    display: block;
+    cursor: pointer;
 }
 
 .post-btn {
-    background: rgb(134, 134, 134);
+    background: white;
     color: black;
     border: none;
     border-radius: 999px;
@@ -208,10 +206,68 @@ body {
     font-weight: 600;
     font-size: 15px;
     cursor: not-allowed;
+
+    position: relative;
+    bottom: 5px;
 }
 
 
 /* RIGHT SECTION */
 .right {
     grid-area: right;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 36px;
+    gap: 20px;
+}
+
+.search>input {
+    background-color: black;
+    padding: 12px;
+    width: 100%;
+    border: 1px solid rgb(54, 59, 63);
+    border-radius: 25px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid rgb(54, 59, 63);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.card>h2 {
+    font-weight: 800;
+    margin-bottom: 8px;
+
+    font-size: 20px;
+}
+
+.card>div {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.842);
+}
+
+.subscribe {
+    font-family: inherit;
+    font-weight: 700;
+
+    width: 100px;
+    height: 35px;
+    border-radius: 25px;
+    font-size: medium;
+    font-weight: 600;
+    padding: 4px;
+    align-self: left;
+    background-color: rgb(29, 155, 240);
+    color: white;
+    border: 0px;
+}
+
+.info {
+    font-size: 13px;
+    color: rgb(108, 118, 127);
 }

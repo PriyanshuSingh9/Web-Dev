@@ -1,8 +1,17 @@
 /* CSS Resets */
 @font-face {
-    font-family: "chirp";
+    font-family: "chirp-regular";
     /* name you choose */
     src: url("../assets/fonts/chirp-regular-web.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "chirp-medium";
+    /* name you choose */
+    src: url("../assets/fonts/chirp-medium-web.woff") format("woff");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -12,23 +21,44 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
     background-color: black;
     color: white;
-    font-family: "chirp";
-
+    font-family: "chirp-regular";
 }
 
 li {
     list-style: none;
 }
 
+/* GUTTERS */
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns:
+        1fr
+        /* left gutter */
+        minmax(0, 1260px)
+        /* content */
+        1fr;
+    /* right gutter */
+
+    background: black;
+}
+
 /* MAIN BODY */
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: "left center right";
+    grid-column: 2;
 
-    margin: 10px 100px;
+    display: grid;
+    grid-template-columns: 260px 595px 1fr;
+    grid-template-areas: "left center right";
+    min-height: 100vh;
+    /* padding: 10px 0; */
 }
 
 /* LEFT SECTION */
@@ -37,19 +67,24 @@ li {
     flex-direction: column;
     gap: 24px;
     grid-area: left;
+    padding: 10px 0px;
+
+    border-right: 0.5px solid gray;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
 
-    gap: 20px;
+    gap: 22px;
 }
 
 .menu-item {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 18px;
+
+    font-size: 22px;
 }
 
 .menu-item>img,
@@ -58,10 +93,123 @@ li {
     height: auto;
 }
 
+.left>button {
+    font-family: "chirp-medium";
+    padding: 4px 32px;
+    width: 240px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: medium;
+    font-weight: 600;
+    padding: 4px;
+    align-self: left;
+    background-color: white;
+    color: black;
+}
+
 /* CENTER SECTION */
 .center {
     grid-area: center;
+    border-right: 1px solid gray;
+
+    display: grid;
+    grid-template-rows: 60px auto;
+    grid-auto-rows: auto;
 }
+
+.bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 60px;
+    border-bottom: 1px solid gray;
+    align-items: center;
+}
+
+.feed-option {
+    text-align: center;
+}
+
+.composer {
+    border-bottom: 1px solid rgb(47, 51, 54);
+    padding: 12px 16px;
+}
+
+.composer-top {
+    display: flex;
+    gap: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.composer-input {
+    flex: 1;
+}
+
+.composer-input textarea {
+    width: 100%;
+    min-height: 56px;
+    line-height: 1.4;
+    resize: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-size: 20px;
+    font-family: inherit;
+}
+
+.reply-setting {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgb(29, 155, 240);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.reply-setting svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.composer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgb(47, 51, 54);
+    margin-top: 12px;
+}
+
+.icons {
+    display: flex;
+    gap: 14px;
+    color: rgb(29, 155, 240);
+}
+
+.icons svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    display: block;
+}
+
+.post-btn {
+    background: rgb(134, 134, 134);
+    color: black;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: not-allowed;
+}
+
 
 /* RIGHT SECTION */
 .right {

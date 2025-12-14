@@ -100,9 +100,63 @@
                 <li class="feed-option">For you</li>
                 <li class="feed-option">Following</li>
             </ul>
-            <div class="happening">What's happening?</div>
-            <div class="show-posts">Show xxx posts</div>
+            <div class="composer">
+
+                <div class="composer-top">
+                    <img class="avatar"
+                        src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"
+                        alt="avatar">
+
+                    <div class="composer-input">
+                        <textarea placeholder="What’s happening?"></textarea>
+
+                        <div class="reply-setting">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-globe" viewBox="0 0 16 16">
+                                <path
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z" />
+                            </svg>
+                            <span>Everyone can reply</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="composer-actions">
+                    <div class="icons">
+                        <span>🖼</span>
+                        <span>GIF</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 32" width="32" height="32"
+                            fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M12.745 20.54l10.97-8.19c.539-.4 1.307-.244 1.564.38 1.349 3.288.746 7.241-1.938 9.955-2.683 2.714-6.417 3.31-9.83 1.954l-3.728 1.745c5.347 3.697 11.84 2.782 15.898-1.324 3.219-3.255 4.216-7.692 3.284-11.693l.008.009c-1.351-5.878.332-8.227 3.782-13.031L33 0l-4.54 4.59v-.014L12.743 20.544m-2.263 1.987c-3.837-3.707-3.175-9.446.1-12.755 2.42-2.449 6.388-3.448 9.852-1.979l3.72-1.737c-.67-.49-1.53-1.017-2.515-1.387-4.455-1.854-9.789-.931-13.41 2.728-3.483 3.523-4.579 8.94-2.697 13.561 1.405 3.454-.899 5.898-3.22 8.364C1.49 30.2.666 31.074 0 32l10.478-9.466" />
+                        </svg>
+                        <!-- List -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M4 6h2v2H4V6zm4 0h12v2H8V6zm-4 5h2v2H4v-2zm4 0h12v2H8v-2zm-4 5h2v2H4v-2zm4 0h12v2H8v-2z" />
+                        </svg>
+                        <!-- Smiley -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-3 7a1.25 1.25 0 1 1 0 2.5
+                                       1.25 1.25 0 0 1 0-2.5zm6 0a1.25 1.25 0 1 1 0 2.5
+                                       1.25 1.25 0 0 1 0-2.5zM12 17c-2.21 0-4.15-1.2-5.19-3h10.38
+                                       c-1.04 1.8-2.98 3-5.19 3z" />
+                        </svg>
+
+                        <!-- Location -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13
+                                       a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5
+                                       2.5 2.5 0 0 1 0 5z" />
+                        </svg>
+                    </div>
+
+                    <button class="post-btn" disabled>Post</button>
+                </div>
+
+            </div>
         </div>
+
         <div class="right">
             <div class="search">
                 <input type="text" placeholder="Search">

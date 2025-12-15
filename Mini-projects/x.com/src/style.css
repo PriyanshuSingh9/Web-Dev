@@ -1,3 +1,4 @@
+/* FONTS */
 @font-face {
     font-family: "chirp";
     src: url("../assets/fonts/chirp-regular-web.woff") format("woff");
@@ -30,6 +31,7 @@
     font-display: swap;
 }
 
+/* CSS RESETS */
 * {
     margin: 0;
     padding: 0;
@@ -61,7 +63,6 @@ body {
     grid-template-columns: 240px 595px 1fr;
     grid-template-areas: "left center right";
     min-height: 100vh;
-    /* padding: 10px 0; */
 }
 
 /* LEFT SECTION */
@@ -75,6 +76,7 @@ body {
     position: fixed;
 }
 
+/* SIDE-MENU */
 .menu {
     display: flex;
     flex-direction: column;
@@ -91,12 +93,14 @@ body {
     font-weight: 300;
 }
 
+/* MENU-ICONS */
 .menu-item>img,
 .menu-item>svg {
     width: 28px;
     height: auto;
 }
 
+/* LEFT-POST-BUTTON */
 .left>button {
     font-family: inherit;
     font-weight: 700;
@@ -117,6 +121,7 @@ body {
     right: 10px;
 }
 
+/* LEFT-USER-PROFILE */
 .left>.person {
     margin-bottom: 20px;
 }
@@ -136,6 +141,7 @@ body {
     grid-auto-rows: auto;
 }
 
+/* FEED-OPTIONS-BAR */
 .bar {
     display: grid;
     position: sticky;
@@ -154,6 +160,7 @@ body {
     text-align: center;
 }
 
+/* POST-COMPOSER-SECTION */
 .composer {
     border-bottom: 1px solid rgb(54, 59, 63);
     padding: 12px 16px;
@@ -228,6 +235,7 @@ body {
     bottom: 5px;
 }
 
+/* POSTS */
 .post {
     padding: 12px 16px;
     display: flex;
@@ -295,6 +303,7 @@ body {
     gap: 20px;
 }
 
+/* SEARCH-BAR */
 .search>input {
     background-color: black;
     padding: 12px;

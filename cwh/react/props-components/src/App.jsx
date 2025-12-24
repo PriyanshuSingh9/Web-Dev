@@ -7,9 +7,9 @@ function App() {
   return (
     <>
       <Navbar/>
-      <Card title="lode ka title" desc="ghode ka description"/>
-      <Card title="lode ka title" desc="ghode ka description"/>
-      <Card title="lode ka title" desc="ghode ka description"/>
+      <Card title="box 1 ka title" desc="box 1 ka description"/>
+      <Card title="box 2 ka title" desc="box 2 ka description"/>
+      <Card title="box 3 ka title" desc="box 3 ka description"/>
       <Footer/>
     </>
   )

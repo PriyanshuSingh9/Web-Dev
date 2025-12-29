@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%; /* NOT 100vw */
+
+  background-color: rgba(0, 0, 50, 0.764);
+  color: coral;
+  border: 4px double rgba(173, 216, 230, 0.853);
+}
+
+.nav-item {
+  list-style: none;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: italic;
+}

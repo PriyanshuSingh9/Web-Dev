@@ -1,5 +1,10 @@
 import "./Sidebar.css";
 
+function toTitleCase(str) {
+  // Normalize the string to lowercase first for consistent results
+  return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
+}
+
 const Sidebar = ({ user_arr, currentUser, setUser }) => {
   return (
     <div className="sidebar">
@@ -15,7 +20,7 @@ const Sidebar = ({ user_arr, currentUser, setUser }) => {
               console.log(userName);
             }}
           >
-            {userName}
+            {toTitleCase(userName)}
           </li>
         ))}
         <button onClick={() => setUser("ALL")}

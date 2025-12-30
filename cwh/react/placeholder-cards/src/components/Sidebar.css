@@ -4,25 +4,64 @@
   box-sizing: border-box;
 }
 
+/* Sidebar container */
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  padding: 18px;
-  height: 100%;
+  gap: 24px;
+  padding: 16px;
+
   width: 250px;
+  height: auto;
 
   background-color: rgba(0, 0, 50, 0.764);
   color: coral;
   border: 4px double rgba(173, 216, 230, 0.853);
-  text-align: center;
 }
 
-.side-item {
-  list-style: number;
-  font-size: 16px;
-}
-
+/* Heading */
 .filter {
   color: rgba(240, 248, 255, 0.908);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Reset list */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* List items */
+.side-item {
+  font-size: 16px;
+  font-weight: 500;
+  color: coral;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+/* Custom bullet */
+.side-item::before {
+  content: "•";
+  color: rgba(240, 248, 255, 0.908);
+}
+
+.side-item.active {
+  color: white;
+  font-weight: 700;
+}
+
+button{
+  background-color: rgba(0, 0, 50, 0.764);
 }

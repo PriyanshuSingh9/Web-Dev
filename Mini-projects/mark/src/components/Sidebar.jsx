@@ -17,7 +17,7 @@ const Sidebar = () => {
                         <label htmlFor="list-name">List name:</label>
                         <input type="text" name="name" id="list-name" value={form.name} onChange={handleForm} />
                     </div>
-                    <div className="form-item">
+                    <div className="form-item desc">
                         <label htmlFor="list-description">Enter a description for the list :</label>
                         <textarea name="desc" id="list-description" value={form.desc} onChange={handleForm}></textarea>
                     </div>

@@ -1,51 +1,55 @@
-To recreate the **TodoList App** (internally named **iTask**) from the sources, you should follow this structured project breakdown. This guide draws on the "Sigma Web Development Course" to help you build a functional, responsive, and persistent application.
-
-### **1. Project Overview & Features**
-The goal is to create a **minimalist task planner** that allows users to manage daily activities with the following features:
-*   **CRUD Operations:** Add, Read, Edit, and Delete tasks.
-*   **Task Completion:** Toggle tasks as "done" with a strike-through visual effect.
-*   **Persistence:** All data is saved to **Local Storage**, so tasks remain even after a browser refresh or restart.
-*   **Filtering:** A toggle to show or hide tasks that have already been completed.
-*   **Responsiveness:** A layout that adapts seamlessly from mobile screens to desktop monitors.
-*   **Input Validation:** The "Save" button is disabled unless the task description is longer than 3 characters.
+This **Project Market Requirements Document (MRD)** outlines the development of a Google Keep-style multi-list application, integrating a full-stack architecture with modern React patterns and MongoDB persistence.
 
 ---
 
-### **2. Tech Stack**
-*   **Framework:** React (built using the Vite build tool).
-*   **Styling:** Tailwind CSS for rapid, utility-first UI design.
-*   **Icons:** React Icons (specifically `FaEdit` and `MdDelete`).
-*   **Unique IDs:** `uuid` package to ensure every task has a distinct identifier.
+### **1. Project Vision & User Stories**
+The objective is to move beyond a single-list application to a **multi-list management system** where users can organise diverse categories of tasks.
+*   **Create Multiple Lists:** As a user, I can use a dedicated form to initialise new lists with unique names.
+*   **Focused Editing (Frontview):** As a user, I can click any list to bring it into a "frontview" (modal) while the main page remains visible in the background, allowing for undistracted editing.
+*   **Full CRUD Logic:** Users must be able to add, read, edit, and delete tasks within both "incomplete" and "complete" categories.
+*   **Persistence:** All data is saved to a central database, ensuring access across different sessions.
 
 ---
 
-### **3. Setup and Installation**
-To start the project, follow these command-line steps:
-1.  **Initialise Project:** Run `npm create vite@latest` and follow the prompts to select **React** and **JavaScript**.
-2.  **Install Tailwind CSS:** Execute `npm install -D tailwindcss postcss autoprefixer` and then `npx tailwindcss init -p` to generate the configuration files.
-3.  **Configure Tailwind:** Update the `content` array in `tailwind.config.js` to include your source files and add the `@tailwind` directives to your `index.css`.
-4.  **Install Dependencies:** Run `npm install uuid react-icons` to add the necessary functional and visual libraries.
+### **2. Technical Architecture**
+The application will transition from a "Clean Slate" front-end to a **MERN-influenced architecture**.
+*   **Frontend:** Built with **React 19**, utilising functional components as the standard for composability.
+*   **Styling:** **Tailwind CSS** for utility-first design, featuring `backdrop-blur` for the background when a list is in frontview.
+*   **UI Components:** **Radix UI** or **Shadcn UI** primitives will be used to manage the "frontview" modal logic, ensuring focus is trapped correctly while the modal is active.
+*   **Data Fetching:** **TanStack Query** will manage all interactions with the MongoDB backend to prevent "race conditions" and handle loading/error states automatically.
 
 ---
 
-### **4. Core Component Logic**
-The application relies on several key functions to manage its state (stored in a `todos` array and a single `todo` string):
-
-*   **Handling Inputs:** Use an `onChange` handler to update the `todo` state as the user types.
-*   **Adding Tasks:** When "Save" is clicked, create a task object containing `{id: uuidv4(), todo, isCompleted: false}` and append it to the `todos` array.
-*   **Toggling Completion:** The `handleCheckbox` function finds the task by its ID and flips its `isCompleted` boolean. **Note:** You must create a new copy of the array (e.g., `let newTodos = [...todos]`) to trigger a re-render in React.
-*   **Editing:** To edit, the app takes the text of an existing task, moves it back into the input field for modification, and removes the old task from the list.
-*   **Persistence (Local Storage):** 
-    *   Use a `useEffect` hook that runs once on mount to retrieve stored tasks using `JSON.parse(localStorage.getItem("todos"))`.
-    *   Create a helper function, `saveToLS`, to save the current state to local storage whenever a task is added, edited, or deleted.
+### **3. Data Schema (MongoDB)**
+Each list document in the MongoDB collection will follow this strict schema to support the multi-list logic:
+*   **`id`**: Unique identifier (generated via **UUID** for frontend-side tracking).
+*   **`list name`**: String identifier for the specific list.
+*   **`incomplete tasks`**: An array of task objects (each with its own ID and text).
+*   **`complete tasks`**: An array of task objects that have been toggled as done.
 
 ---
 
-### **5. UI and Styling Highlights**
-*   **Layout:** Use a central container with `mx-auto` and a violet-themed background for a clean "Card" look.
-*   **Navigation:** A simple Navbar with a logo and hover effects on links.
-*   **Task Display:** Use `.map()` to render tasks. For completed tasks, conditionally apply the Tailwind class `line-through`.
-*   **Mobile Optimisation:** Use responsive prefixes like `md:w-1/2` for desktops while defaulting to `w-full` for mobile devices to ensure the app looks good on all screens.
+### **4. Component Design Patterns**
+To manage the complexity of multiple lists and nested tasks, the following React principles will be applied:
+*   **Lift Content Up:** The logic for which list is currently in the "frontview" will be lifted to the parent component, which then renders the specific list in a provided slot.
+*   **Push State Down:** Individual task interactions (like toggling a checkbox) will have their state managed as close to the UI as possible to avoid unnecessary re-renders of the entire list.
+*   **Optimistic UI:** Use the **`useOptimistic` hook** for task edits; this ensures the UI updates immediately when a user modifies a task in the frontview before the database confirmation returns.
+
+---
+
+### **5. Accessibility (A11y) & UX Standards**
+*   **ARIA Roles:** The "frontview" must use `role="dialog"` and `aria-modal="true"` to notify assistive technologies that the background content is currently inert.
+*   **Focus Management:** The application must handle focus shifts automatically when a list moves to the frontview so keyboard-only users can navigate the modal immediately.
+*   **Visual Indicators:** Completed tasks will use the Tailwind `line-through` class for sighted users, while `aria-pressed` or `defaultChecked` attributes will communicate state to screen readers.
+
+---
+
+### **6. Development Milestones**
+1.  **Setup:** Initialise React with Vite and install Tailwind, Radix UI, and TanStack Query.
+2.  **API Layer:** Create Express routes to handle CRUD operations for the defined MongoDB schema.
+3.  **UI Layout:** Build the main dashboard and the "Create List" form using semantic HTML.
+4.  **Frontview Logic:** Implement the modal interaction using Radix primitives and apply the "Lift Content Up" pattern.
+5.  **Optimisation:** Integrate `useOptimistic` for task edits and perform accessibility audits using Lighthouse.
 
 ### **Metaphor for Understanding**
-Building this app is like **organising a physical corkboard**. The **React State** is the board itself, the **UUIDs** are the unique pins holding each note, and **Local Storage** is like taking a photograph of the board every time you move a pin, so you can perfectly recreate it the next morning.
+Managing this app is like **running a library with private reading rooms**. The main dashboard is the **library floor**, where you can see all the different **books (Lists)**. When you click a list, it’s like taking that book into a **private room (Frontview)**; the library is still there in the background, but your focus is entirely on the pages in front of you. **TanStack Query** acts as the librarian who ensures that any notes you scribble in the book are perfectly synchronised with the **master archives (MongoDB)**.

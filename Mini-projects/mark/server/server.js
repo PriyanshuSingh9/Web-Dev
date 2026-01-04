@@ -5,7 +5,7 @@ import list_routes from "./routes/list.routes.js"
 const app = express()
 
 // middleware to parse into json
-app.use(express.json)
+app.use(express.json())
 
 // Any request that starts with /lists should be handled by listRoutes
 app.use("/lists", list_routes)

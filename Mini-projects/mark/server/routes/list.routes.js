@@ -1,7 +1,11 @@
 import express from "express"
-import { addTask, deleteTask, updateTask } from "../controllers/list.controller.js";
+import { addTask, deleteTask, updateTask, createList, deleteList, fetchList } from "../controllers/list.controller.js";
 
 const router = express.Router()
+
+router.post("/", createList)
+router.get("/", fetchList)
+router.delete("/:listId", deleteList)
 
 router.post("/:listId/tasks", addTask)
 router.delete("/:listId/tasks/:taskId", deleteTask)

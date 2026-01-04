@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <nav>
             <div className="navbar">
-                <img src="src/assets/text.svg" alt="logo" className="logo" />
+                <img src="/client/src/assets/text.svg" alt="logo" className="logo" />
                 <div className="opener">Work is Where You Are</div>
                 <div className="load">
                     [██████░░░░] 60%

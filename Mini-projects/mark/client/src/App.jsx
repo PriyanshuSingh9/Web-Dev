@@ -29,7 +29,22 @@ function App() {
         <Navbar />
         <div className="container">
           <Sidebar />
-          <div className="lists"></div>
+          <div className="lists">
+            {lists.length === 0 ? <p>Loading...</p> :
+              lists.map(list => {
+                return (
+                  <div key={list._id} className="list">
+                    <h3 className="title">{list.list_name}</h3>
+                    {list.list_desc && <p>{list.list_desc}</p>}
+                    {list.list_tasks.map((task) => {
+                      return (
+                        <div className="task">{task.title}</div>
+                      )
+                    })}
+                  </div>
+                )
+              })}
+          </div>
         </div>
       </div>
     </>

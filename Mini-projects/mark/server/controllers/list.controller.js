@@ -36,7 +36,7 @@ export const fetchList = async (req, res) => {
     try {
         const lists = await List.find({})
         console.log(lists)
-        res.status(200).json({ message: "Lists fetched successfully", lists: lists })
+        res.status(200).json(lists);
     } catch (error) {
         res.status(500).json({ message: `Failed to find lists ${error}` })
 

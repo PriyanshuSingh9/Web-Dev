@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 
 import Navbar from "./components/Navbar/Navbar"
 import Sidebar from './components/Sidebar/Sidebar'
+import ListCard from "./components/ListCard/ListCard"
 import './App.css'
+
 
 function App() {
   const [lists, setLists] = useState([])
@@ -18,6 +20,23 @@ function App() {
     }
   }
 
+  async function addTask(listId, title) {
+    try {
+      await fetch(`http://localhost:5000/lists/${listId}/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title })
+      })
+
+      fetchLists()
+    } catch (error) {
+      console.log("Failed to add task:", error)
+    }
+  }
+
+
   // fetching the lists on the first reload
   useEffect(() => {
     fetchLists()
@@ -30,20 +49,13 @@ function App() {
         <div className="container">
           <Sidebar />
           <div className="lists">
-            {lists.length === 0 ? <p>Loading...</p> :
-              lists.map(list => {
-                return (
-                  <div key={list._id} className="list">
-                    <h3 className="title">{list.list_name}</h3>
-                    {list.list_desc && <p>{list.list_desc}</p>}
-                    {list.list_tasks.map((task) => {
-                      return (
-                        <div className="task">{task.title}</div>
-                      )
-                    })}
-                  </div>
-                )
-              })}
+            {lists.map(list => (
+              <ListCard
+                key={list._id}
+                list={list}
+                onTaskAdded={addTask}
+              />
+            ))}
           </div>
         </div>
       </div>

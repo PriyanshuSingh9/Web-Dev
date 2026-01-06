@@ -134,7 +134,7 @@ function App() {
                 key={list._id}
                 list={list}
                 onTaskAdd={addTask}
-                onTaskUpdated={updateTask}
+                onTaskUpdate={updateTask}
                 onTaskDelete={deleteTask}
                 onListDelete={deleteList}
               />

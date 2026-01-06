@@ -19,23 +19,12 @@ This document evaluates the current state of the project against the requirement
 
 ## Improvements to be Made
 
-*   **Implement "Frontview" Modal:** The core feature of a focused editing view is missing. This should be implemented using a modal library like **Radix UI** or **Shadcn UI** as planned.
 *   **Optimistic UI:** To improve the user experience, the **`useOptimistic` hook** should be used for task updates. This will make the UI feel faster by updating it immediately, before the server response is received.
 *   **Accessibility (A11y):** Once the "frontview" modal is implemented, it must be made accessible by using appropriate ARIA roles (`role="dialog"`, `aria-modal="true"`) and managing focus correctly.
 *   **Code Quality:** The frontend code could be improved by separating concerns more clearly. For example, the data fetching logic could be extracted into custom hooks.
 
-## Mistakes Made
-
-*   **Dependencies:** Key dependencies outlined in the `README.md` were not installed (`tailwindcss`, `radix-ui`/`shadcn-ui`, `tanstack-query`).
-*   **Schema Deviation:** The implemented MongoDB schema does not match the schema defined in the `README.md`. This kind of deviation can lead to confusion and bugs.
-*   **Ignoring the Plan:** The project has significantly diverged from the technical architecture and component design patterns outlined in the `README.md`.
-
 ## Not Implemented / Left Out
 
-*   **"Frontview" (Modal):** The focused editing view for lists is not implemented.
 *   **TanStack Query:** Data fetching is done with the native `fetch` API, not TanStack Query.
-*   **Tailwind CSS:** Styling is done with plain CSS.
-*   **Radix UI / Shadcn UI:** No component library is used for the modal or other UI elements.
 *   **`useOptimistic` hook:** Optimistic UI updates are not implemented.
 *   **Accessibility for Modal:** Since there is no modal, the specified accessibility features are not implemented.
-*   **UUID for IDs:** The `id` field with a UUID is not present in the schema.

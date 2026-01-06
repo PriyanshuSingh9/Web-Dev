@@ -31,10 +31,7 @@ const Sidebar = ({ onListCreated }) => {
                         <label htmlFor="list-description">Enter a description for the list :</label>
                         <textarea name="desc" id="list-description" value={form.desc} onChange={handleForm}></textarea>
                     </div>
-                    <button className="create" onClick={(e) => {
-                        onListCreated(form.name, form.desc)
-                        setForm({ name: "", desc: "" })
-                    }}>Create</button>
+                    <button className="create" type='submit'>Create</button>
                 </form>
             </div>
         </div>

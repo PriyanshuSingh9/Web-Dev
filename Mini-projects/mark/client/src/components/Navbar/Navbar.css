@@ -1,35 +1,13 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-}
-
 .navbar {
   display: flex;
-
   align-items: center;
-  justify-content: space-around;
-
-  background-color: whitesmoke;
-  
-  width: 100vw;
+  justify-content: space-between;
+  background-color: var(--surface-color);
+  width: 100%;
   padding: 12px 24px;
-  border-bottom: black 1.5px solid;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.logo{
-    width: 115px;
-}
-
-.opener{
-    color: black;
-}
-
-.load{
-    color: black;
-}
-
-.container{
-    color: black;
+.logo {
+  width: 115px;
 }

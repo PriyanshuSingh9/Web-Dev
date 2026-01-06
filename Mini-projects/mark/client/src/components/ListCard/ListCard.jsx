@@ -30,6 +30,7 @@ const ListCard = ({ list, onTaskAdd, onTaskUpdate, onTaskDelete, onListDelete })
                     {
                         editingTaskId === task._id ?
                             <input type="text"
+                                className='task-edit-input'
                                 value={editedTitle}
                                 placeholder={task.title}
                                 autoFocus

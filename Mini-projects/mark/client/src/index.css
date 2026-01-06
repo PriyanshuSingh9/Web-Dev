@@ -1,0 +1,22 @@
+:root {
+  --background-color: #F0F2F5;
+  --surface-color: #FFFFFF;
+  --text-color: #333333;
+  --accent-color: #4A90E2;
+  --border-color: #E0E0E0;
+}
+
+body {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

@@ -8,25 +8,31 @@ import './App.css'
 
 function App() {
   const [lists, setLists] = useState([])
+
   const [isLoading, setIsLoading] = useState(true)
   const [errorPresent, setErrorPresent] = useState(false)
 
-  async function fetchLists() {
+  async function fetchLists(silent) {
     try {
-      setIsLoading(true)
+      if (!silent) {
+        setIsLoading(true)
+      }
       setErrorPresent(false)
 
       const res = await fetch("http://localhost:5000/lists")
+      if (!res.ok) throw new Error("Fetch failed")
+
       const data = await res.json()
 
       console.log("Successfully fetched lists:", data)
       setLists(data)
     } catch (error) {
       setErrorPresent(true)
-      isLoading(false)
       console.log("Failed to fetch lists:", error)
     } finally {
-      setIsLoading(false)
+      if (!silent) {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -40,7 +46,7 @@ function App() {
         body: JSON.stringify({ list_name: listName, list_desc: listDesc })
       })
 
-      fetchLists()
+      fetchLists(true)
     } catch (error) {
       console.log("Failed to create lists:", error)
 
@@ -58,7 +64,7 @@ function App() {
         }
       )
 
-      fetchLists()
+      fetchLists(true)
     } catch (error) {
       console.log("Failed to delete lists:", error)
     }
@@ -74,7 +80,7 @@ function App() {
         body: JSON.stringify({ title: title })
       })
 
-      fetchLists()
+      fetchLists(true)
     } catch (error) {
       console.log("Failed to add task:", error)
     }
@@ -102,7 +108,7 @@ function App() {
         }
 
       )
-      fetchLists()
+      fetchLists(true)
     } catch (error) {
       console.log("Failed to update task:", error)
     }
@@ -118,7 +124,7 @@ function App() {
           }
         }
       )
-      fetchLists()
+      fetchLists(true)
     } catch (error) {
       console.log("Failed to delete task:", error)
 
@@ -128,7 +134,7 @@ function App() {
 
   // fetching the lists on the first reload
   useEffect(() => {
-    fetchLists()
+    fetchLists(false)
   }, [])
 
   return (
@@ -139,25 +145,36 @@ function App() {
           <Sidebar
             onListCreated={createList} />
           {isLoading ? (
-            <p>Loading</p>
+            <div className="loading-container">
+              <p className="loading-text">Loading...</p>
+            </div>
           ) :
             errorPresent ? (
-              <button className="reload" onClick={fetchLists}>
-                Retry reload
-              </button>
+              <div className="error-container">
+                <p>Something went wrong.</p>
+                <button className="reload" onClick={() => { fetchLists(false) }}>
+                  Retry
+                </button>
+              </div>
             )
               : (
-                < div className="lists">
-                  {lists.map(list => (
-                    <ListCard
-                      key={list._id}
-                      list={list}
-                      onTaskAdd={addTask}
-                      onTaskUpdate={updateTask}
-                      onTaskDelete={deleteTask}
-                      onListDelete={deleteList}
-                    />
-                  ))}
+                <div className="lists">
+                  {lists.length === 0 ? (
+                    <div className="no-lists-container">
+                      <p>No lists yet. Create one to get started!</p>
+                    </div>
+                  ) : (
+                    lists.map(list => (
+                      <ListCard
+                        key={list._id}
+                        list={list}
+                        onTaskAdd={addTask}
+                        onTaskUpdate={updateTask}
+                        onTaskDelete={deleteTask}
+                        onListDelete={deleteList}
+                      />
+                    ))
+                  )}
                 </div>
               )
           }

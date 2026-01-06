@@ -32,3 +32,48 @@ body,
   padding: 16px;
   overflow-y: auto;
 }
+
+.loading-container,
+.error-container,
+.no-lists-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.error-container p {
+  font-size: 1.2rem;
+  color: #D32F2F; /* A prominent red color */
+}
+
+.no-lists-container p {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.reload {
+  padding: 15px 30px; /* Increased padding */
+  border: none; /* Removed border */
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1.2rem; /* Larger font size */
+  cursor: pointer;
+  border-radius: 8px; /* Slightly more rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for verbosity */
+}
+
+.reload:hover {
+  background-color: var(--primary-color-dark);
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}

@@ -2,8 +2,10 @@
   --background-color: #F0F2F5;
   --surface-color: #FFFFFF;
   --text-color: #333333;
-  --accent-color: #4A90E2;
+  --accent-color: #333333; /* Black for checkboxes */
   --border-color: #E0E0E0;
+  --primary-color: #333333; /* Black */
+  --primary-color-dark: #1a1a1a; /* Darker black for hover */
 }
 
 body {

@@ -1,3 +1,4 @@
+# Full-Stack Todo App — Checkpoint 03 
 # MongoDB + Mongoose — What You Learned Today
 
 ## 1. How to think about data (most important)

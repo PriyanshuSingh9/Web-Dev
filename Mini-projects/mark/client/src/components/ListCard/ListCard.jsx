@@ -16,7 +16,9 @@ const ListCard = ({ list, onTaskAdd, onTaskUpdate, onTaskDelete, onListDelete })
                     <img src="client/src/assets/icons8-trash-24.png" alt="trash"
                         className='delete-icon'
                         onClick={() => {
-                            onListDelete(list._id)
+                            if (window.confirm(`Are you sure you want to delete list: ${list.list_name}`)) {
+                                onListDelete(list._id)
+                            }
                         }
 
                         }
@@ -73,7 +75,9 @@ const ListCard = ({ list, onTaskAdd, onTaskUpdate, onTaskDelete, onListDelete })
                     <img src="client/src/assets/icons8-cross-50.png" alt="delete"
                         className='delete-icon'
                         onClick={(() => {
-                            onTaskDelete(list._id, task._id)
+                            if (window.confirm(`Are you sure you want to delete task: ${task.title}`)) {
+                                onTaskDelete(list._id, task._id)
+                            }
                         })} />
                 </div>
             ))

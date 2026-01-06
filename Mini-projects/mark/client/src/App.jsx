@@ -8,15 +8,25 @@ import './App.css'
 
 function App() {
   const [lists, setLists] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [errorPresent, setErrorPresent] = useState(false)
 
   async function fetchLists() {
     try {
+      setIsLoading(true)
+      setErrorPresent(false)
+
       const res = await fetch("http://localhost:5000/lists")
       const data = await res.json()
+
       console.log("Successfully fetched lists:", data)
       setLists(data)
     } catch (error) {
+      setErrorPresent(true)
+      isLoading(false)
       console.log("Failed to fetch lists:", error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -128,20 +138,31 @@ function App() {
         <div className="container">
           <Sidebar
             onListCreated={createList} />
-          <div className="lists">
-            {lists.map(list => (
-              <ListCard
-                key={list._id}
-                list={list}
-                onTaskAdd={addTask}
-                onTaskUpdate={updateTask}
-                onTaskDelete={deleteTask}
-                onListDelete={deleteList}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <p>Loading</p>
+          ) :
+            errorPresent ? (
+              <button className="reload" onClick={fetchLists}>
+                Retry reload
+              </button>
+            )
+              : (
+                < div className="lists">
+                  {lists.map(list => (
+                    <ListCard
+                      key={list._id}
+                      list={list}
+                      onTaskAdd={addTask}
+                      onTaskUpdate={updateTask}
+                      onTaskDelete={deleteTask}
+                      onListDelete={deleteList}
+                    />
+                  ))}
+                </div>
+              )
+          }
         </div>
-      </div>
+      </div >
     </>
   )
 }

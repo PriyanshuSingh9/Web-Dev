@@ -20,6 +20,40 @@ function App() {
     }
   }
 
+  async function createList(listName, listDesc) {
+    try {
+      await fetch("http://localhost:5000/lists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ list_name: listName, list_desc: listDesc })
+      })
+
+      fetchLists()
+    } catch (error) {
+      console.log("Failed to create lists:", error)
+
+    }
+  }
+
+  async function deleteList(listId) {
+    try {
+      await fetch(`http://localhost:5000/lists/${listId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+
+      fetchLists()
+    } catch (error) {
+      console.log("Failed to delete lists:", error)
+    }
+  }
+
   async function addTask(listId, title) {
     try {
       await fetch(`http://localhost:5000/lists/${listId}/tasks`, {
@@ -27,12 +61,57 @@ function App() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ title })
+        body: JSON.stringify({ title: title })
       })
 
       fetchLists()
     } catch (error) {
       console.log("Failed to add task:", error)
+    }
+  }
+
+  async function updateTask(listId, taskId, update) {
+    try {
+      const payload = {}
+      if (update.title !== undefined) {
+        payload.title = update.title
+      }
+      if (update.completed !== undefined) {
+        payload.completed = update.completed
+      }
+
+      if (Object.keys(payload).length === 0) return;
+
+      await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+
+      )
+      fetchLists()
+    } catch (error) {
+      console.log("Failed to update task:", error)
+    }
+  }
+
+  async function deleteTask(listId, taskId) {
+    try {
+      await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      fetchLists()
+    } catch (error) {
+      console.log("Failed to delete task:", error)
+
     }
   }
 
@@ -47,13 +126,17 @@ function App() {
       <div className="app">
         <Navbar />
         <div className="container">
-          <Sidebar />
+          <Sidebar
+            onListCreated={createList} />
           <div className="lists">
             {lists.map(list => (
               <ListCard
                 key={list._id}
                 list={list}
-                onTaskAdded={addTask}
+                onTaskAdd={addTask}
+                onTaskUpdated={updateTask}
+                onTaskDelete={deleteTask}
+                onListDelete={deleteList}
               />
             ))}
           </div>

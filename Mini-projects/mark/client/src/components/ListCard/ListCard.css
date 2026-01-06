@@ -10,6 +10,11 @@
     0 1px 2px rgba(0, 0, 0, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.06);
 }
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .add{
   padding: 2px 4px;
@@ -23,6 +28,26 @@
   border-color: purple;
 }
 .task{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+}
+.task-content{
     display: flex;
+    align-items: center;
     gap: 4px;
+}
+.task.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.task-content input[type="checkbox"] {
+  accent-color: black;
+  width: 16px;
+  height: 16px;
+}
+.delete-icon{
+  width: 24px;
+  height: 24px;
 }

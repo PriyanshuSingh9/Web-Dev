@@ -12,11 +12,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [errorPresent, setErrorPresent] = useState(false)
 
-  async function fetchLists(silent) {
+  async function fetchLists() {
     try {
-      if (!silent) {
-        setIsLoading(true)
-      }
+      setIsLoading(true)
       setErrorPresent(false)
 
       const res = await fetch("http://localhost:5000/lists")
@@ -30,9 +28,7 @@ function App() {
       setErrorPresent(true)
       console.log("Failed to fetch lists:", error)
     } finally {
-      if (!silent) {
-        setIsLoading(false)
-      }
+      setIsLoading(false)
     }
   }
 
@@ -46,7 +42,7 @@ function App() {
         body: JSON.stringify({ list_name: listName, list_desc: listDesc })
       })
 
-      fetchLists(true)
+      fetchLists()
     } catch (error) {
       console.log("Failed to create lists:", error)
 
@@ -64,13 +60,26 @@ function App() {
         }
       )
 
-      fetchLists(true)
+      fetchLists()
     } catch (error) {
       console.log("Failed to delete lists:", error)
     }
   }
 
   async function addTask(listId, title) {
+    const previousLists = lists
+
+    const tempId = crypto.randomUUID()
+
+    setLists(prevLists => {
+      return prevLists.map(list =>
+        list._id !== listId ? list
+          : {
+            ...list, list_tasks: ([...list.list_tasks, { _id: tempId, title: title, completed: false }])
+          }
+      )
+    })
+
     try {
       await fetch(`http://localhost:5000/lists/${listId}/tasks`, {
         method: "POST",
@@ -80,41 +89,81 @@ function App() {
         body: JSON.stringify({ title: title })
       })
 
-      fetchLists(true)
     } catch (error) {
+      setLists(previousLists)
       console.log("Failed to add task:", error)
     }
   }
 
   async function updateTask(listId, taskId, update) {
+    if (update.completed === undefined) {
+      try {
+        await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(update)
+          }
+        )
+        fetchLists()
+      } catch (error) {
+        console.log("Failed to update task:", error)
+      }
+      return
+    }
+
+    // optimistic path for completion toggle update
+    const previousLists = lists
+
+    setLists(prevLists =>
+      prevLists.map(list =>
+        list._id !== listId ? list
+          : {
+            ...list,
+            list_tasks: list.list_tasks.map(task =>
+              task._id !== taskId ? task
+                : {
+                  ...task, completed: update.completed
+                }
+            )
+          }
+      )
+    )
+
     try {
-      const payload = {}
-      if (update.title !== undefined) {
-        payload.title = update.title
-      }
-      if (update.completed !== undefined) {
-        payload.completed = update.completed
-      }
-
-      if (Object.keys(payload).length === 0) return;
-
       await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ completed: update.completed })
         }
-
       )
-      fetchLists(true)
     } catch (error) {
       console.log("Failed to update task:", error)
+      setLists(previousLists)
     }
   }
 
+
   async function deleteTask(listId, taskId) {
+    const previousLists = lists
+
+    setLists(prevLists =>
+      prevLists.map(list =>
+        list._id !== listId ? list
+          : {
+            ...list,
+            list_tasks: list.list_tasks.filter(task =>
+              task._id !== taskId
+            )
+          }
+      )
+    )
+
     try {
       await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
         {
@@ -124,17 +173,16 @@ function App() {
           }
         }
       )
-      fetchLists(true)
     } catch (error) {
       console.log("Failed to delete task:", error)
-
+      setLists(previousLists)
     }
   }
 
 
   // fetching the lists on the first reload
   useEffect(() => {
-    fetchLists(false)
+    fetchLists()
   }, [])
 
   return (
@@ -152,7 +200,7 @@ function App() {
             errorPresent ? (
               <div className="error-container">
                 <p>Something went wrong.</p>
-                <button className="reload" onClick={() => { fetchLists(false) }}>
+                <button className="reload" onClick={() => { fetchLists() }}>
                   Retry
                 </button>
               </div>

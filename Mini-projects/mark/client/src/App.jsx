@@ -33,6 +33,11 @@ function App() {
   }
 
   async function createList(listName, listDesc) {
+    const previousLists = lists
+    const tempId = crypto.randomUUID()
+
+    setLists(prevLists =>
+      [...prevLists, { _id: tempId, list_name: listName, list_desc: listDesc, list_tasks: [] }])
     try {
       await fetch("http://localhost:5000/lists", {
         method: "POST",
@@ -41,27 +46,29 @@ function App() {
         },
         body: JSON.stringify({ list_name: listName, list_desc: listDesc })
       })
-
-      fetchLists()
     } catch (error) {
+      setLists(previousLists)
       console.log("Failed to create lists:", error)
 
     }
   }
 
   async function deleteList(listId) {
+    const previousLists = lists
+
+    setLists(prevLists =>
+      prevLists.filter((list) =>
+        list._id !== listId
+      )
+    )
     try {
       await fetch(`http://localhost:5000/lists/${listId}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json"
-          }
         }
       )
-
-      fetchLists()
     } catch (error) {
+      setLists(previousLists)
       console.log("Failed to delete lists:", error)
     }
   }
@@ -96,26 +103,14 @@ function App() {
   }
 
   async function updateTask(listId, taskId, update) {
-    if (update.completed === undefined) {
-      try {
-        await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(update)
-          }
-        )
-        fetchLists()
-      } catch (error) {
-        console.log("Failed to update task:", error)
-      }
-      return
-    }
-
     // optimistic path for completion toggle update
     const previousLists = lists
+
+    let titleUpdate = true
+    let completionUpdate = true
+
+    if (update.title == undefined) { titleUpdate = false }
+    if (update.completed == undefined) { completionUpdate = false }
 
     setLists(prevLists =>
       prevLists.map(list =>
@@ -125,7 +120,9 @@ function App() {
             list_tasks: list.list_tasks.map(task =>
               task._id !== taskId ? task
                 : {
-                  ...task, completed: update.completed
+                  ...task,
+                  title: titleUpdate ? update.title : task.title,
+                  completed: completionUpdate ? update.completed : task.completed
                 }
             )
           }
@@ -139,7 +136,7 @@ function App() {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ completed: update.completed })
+          body: JSON.stringify(update)
         }
       )
     } catch (error) {

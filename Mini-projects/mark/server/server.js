@@ -18,6 +18,7 @@ app.use(express.json())
 // Any request that starts with /lists should be handled by listRoutes
 app.use("/lists", list_routes)
 
+// connecting to database
 mongoose
     .connect("mongodb://127.0.0.1:27017/mark")
     .then(() => {

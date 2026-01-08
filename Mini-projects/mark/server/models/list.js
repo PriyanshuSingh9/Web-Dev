@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 
+// Schema for tasks
 const taskSchema = new mongoose.Schema({
     // task name is always required
     title: {
@@ -15,11 +16,13 @@ const taskSchema = new mongoose.Schema({
 
 // in mongoose fields are not required by default thus we dont have to use required: false 
 
+// Schema for lists
 const listSchema = new mongoose.Schema({
     list_name: { type: String, required: true },
     list_desc: String,
     list_tasks: [taskSchema]
 },
+    // timestamps for when the list was created or updated
     { timestamps: true }
 )
 

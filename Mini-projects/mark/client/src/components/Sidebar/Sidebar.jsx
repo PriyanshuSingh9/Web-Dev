@@ -2,12 +2,15 @@ import { useState } from 'react'
 import "./Sidebar.css"
 
 const Sidebar = ({ onListCreated }) => {
+    // form for creating a new list
     const [form, setForm] = useState({ name: "", desc: "" })
 
+    // function to handle changes in the form
     function handleForm(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
+    // function to handle from submission
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -22,6 +25,7 @@ const Sidebar = ({ onListCreated }) => {
         <div className="sidebar">
             <div className="new">
                 <h3>Create a new list :</h3>
+                {/* Form for creating a new list */}
                 <form action="post" onSubmit={handleSubmit}>
                     <div className="form-item">
                         <label htmlFor="list-name">List name:</label>

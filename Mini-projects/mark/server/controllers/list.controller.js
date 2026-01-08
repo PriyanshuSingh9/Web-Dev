@@ -1,5 +1,6 @@
 import List from "../models/list.js";
 
+// Controller for creating a list
 export const createList = async (req, res) => {
     try {
         // extracting list name and description from request
@@ -17,6 +18,7 @@ export const createList = async (req, res) => {
     }
 }
 
+// Controller for deleting a list
 export const deleteList = async (req, res) => {
     try {
         const { listId } = req.params
@@ -32,6 +34,7 @@ export const deleteList = async (req, res) => {
     }
 }
 
+// Controller for fetching all lists
 export const fetchList = async (req, res) => {
     try {
         const lists = await List.find({})
@@ -43,6 +46,7 @@ export const fetchList = async (req, res) => {
     }
 }
 
+// Controller for adding a task to a list
 export const addTask = async (req, res) => {
     try {
         // we enclose listId here in brackets as we want to unpack the params object into listId
@@ -66,6 +70,7 @@ export const addTask = async (req, res) => {
     }
 }
 
+// Controller for deleting a task from a list
 export const deleteTask = async (req, res) => {
     try {
         // we enclose listId and taskId here in brackets as we want to unpack the params object into listId and taskId
@@ -86,7 +91,7 @@ export const deleteTask = async (req, res) => {
     }
 }
 
-
+// Controller for updating a task in a list
 export const updateTask = async (req, res) => {
     try {
         const { listId, taskId } = req.params
@@ -120,5 +125,3 @@ export const updateTask = async (req, res) => {
         res.status(500).json({ message: `Failed to update task ${error}` })
     }
 }
-
-// export const fetchList

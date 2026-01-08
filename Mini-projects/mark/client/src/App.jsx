@@ -9,14 +9,21 @@ import './App.css'
 function App() {
   const [lists, setLists] = useState([])
 
+  // for loading screens and error screens
   const [isLoading, setIsLoading] = useState(true)
   const [errorPresent, setErrorPresent] = useState(false)
 
-  async function fetchLists() {
+  // fetching lists with our router 
+  async function fetchLists(silent) {
     try {
-      setIsLoading(true)
+      // for silent = true no loading screen appears
+      // for silent = false loading screen appears
+      if (!silent) {
+        setIsLoading(true)
+      }
       setErrorPresent(false)
 
+      // fetch request
       const res = await fetch("http://localhost:5000/lists")
       if (!res.ok) throw new Error("Fetch failed")
 
@@ -28,15 +35,24 @@ function App() {
       setErrorPresent(true)
       console.log("Failed to fetch lists:", error)
     } finally {
-      setIsLoading(false)
+      if (!silent) {
+        setIsLoading(false)
+      }
     }
   }
 
+  // creating lists 
   async function createList(listName, listDesc) {
+    // setting up a snapshot for reload after request fails
     const previousLists = lists
+    // temporary uid for list before fethcing lists for optimistic updates
     const tempId = crypto.randomUUID()
 
+    // optimistic update of lists
     setLists(prevLists =>
+      // spread operator is used to so as to bring all lists previously stored
+      // and after comma we add a list manually for the new list
+      // lists are put in a [] bracket as well
       [...prevLists, { _id: tempId, list_name: listName, list_desc: listDesc, list_tasks: [] }])
     try {
       await fetch("http://localhost:5000/lists", {
@@ -46,13 +62,19 @@ function App() {
         },
         body: JSON.stringify({ list_name: listName, list_desc: listDesc })
       })
+
+      // fetchlists used only to have the correct uid for the ui as well
+      // could be improved
+      await fetchLists(true)
     } catch (error) {
+      // rerender if db does not get updated
       setLists(previousLists)
       console.log("Failed to create lists:", error)
 
     }
   }
 
+  // deleting lists
   async function deleteList(listId) {
     const previousLists = lists
 
@@ -73,6 +95,7 @@ function App() {
     }
   }
 
+  // Adding tasks
   async function addTask(listId, title) {
     const previousLists = lists
 
@@ -96,16 +119,19 @@ function App() {
         body: JSON.stringify({ title: title })
       })
 
+      await fetchLists(true)
     } catch (error) {
       setLists(previousLists)
       console.log("Failed to add task:", error)
     }
   }
 
+  // Updating tasks
   async function updateTask(listId, taskId, update) {
     // optimistic path for completion toggle update
     const previousLists = lists
 
+    // flags for checking updates assume to be true and update accordingly
     let titleUpdate = true
     let completionUpdate = true
 
@@ -114,6 +140,7 @@ function App() {
 
     setLists(prevLists =>
       prevLists.map(list =>
+        // if list id = the id of list where the function call came from update the task accordingly
         list._id !== listId ? list
           : {
             ...list,
@@ -129,6 +156,7 @@ function App() {
       )
     )
 
+    // send the request to the db
     try {
       await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
         {
@@ -140,12 +168,13 @@ function App() {
         }
       )
     } catch (error) {
+      // rollback to previous state if updates in db are not made due to any error
       console.log("Failed to update task:", error)
       setLists(previousLists)
     }
   }
 
-
+  // Deleting task
   async function deleteTask(listId, taskId) {
     const previousLists = lists
 
@@ -154,6 +183,7 @@ function App() {
         list._id !== listId ? list
           : {
             ...list,
+            // in delete operations for optimistic updates we use filter instead of map
             list_tasks: list.list_tasks.filter(task =>
               task._id !== taskId
             )
@@ -165,9 +195,6 @@ function App() {
       await fetch(`http://localhost:5000/lists/${listId}/tasks/${taskId}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json"
-          }
         }
       )
     } catch (error) {
@@ -179,7 +206,7 @@ function App() {
 
   // fetching the lists on the first reload
   useEffect(() => {
-    fetchLists()
+    fetchLists(false)
   }, [])
 
   return (
@@ -197,18 +224,20 @@ function App() {
             errorPresent ? (
               <div className="error-container">
                 <p>Something went wrong.</p>
-                <button className="reload" onClick={() => { fetchLists() }}>
+                <button className="reload" onClick={() => { fetchLists(false) }}>
                   Retry
                 </button>
               </div>
             )
               : (
                 <div className="lists">
+                  {/* if there are no lists in db displat "no lists yet" */}
                   {lists.length === 0 ? (
                     <div className="no-lists-container">
                       <p>No lists yet. Create one to get started!</p>
                     </div>
                   ) : (
+                    // passing all the functions to the list card
                     lists.map(list => (
                       <ListCard
                         key={list._id}

@@ -6,7 +6,8 @@ This file contains a comprehensive list of all the concepts and topics covered a
 
 ### Components and Props (`props-components`)
 - **Functional Components**: Building blocks of the UI.
-- **JSX**: Syntax extension for writing HTML-like code within JavaScript.
+- **JSX**: Syntax extensinpx create-next-app@latest 
+- on for writing HTML-like code within JavaScript.
 - **Props**: Passing data from parent to child components (e.g., passing `title` and `desc` to a `Card` component).
 - **Reusable Components**: Creating components like `Navbar` and `Footer` to use across the application.
 

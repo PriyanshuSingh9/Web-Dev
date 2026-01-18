@@ -9,7 +9,7 @@ const app = express()
 
 // allowing our frontend to interact with the backend
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: "http://localhost:5173"s
 }));
 
 // middleware to parse into json

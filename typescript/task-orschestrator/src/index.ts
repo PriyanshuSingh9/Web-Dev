@@ -1,37 +1,50 @@
-enum TaskStatus {
-    Open = "open",
-    InProgress = "active",
-    Closed = "closed"
-}
+import { Task, EmailTask, TaskStatus } from "./types"
+import { DataManager } from "./datamanager"
 
-interface Task {
-    readonly id: number,
-    title: string,
-    status: TaskStatus,
-    // status: "open" | "closed" | "in progress",
-    // in place of unions we use an enum to reduce redundancy and improve code lifetime 
-    completedOn?: Date
-}
+const TaskManager = new DataManager<Task>()
+// let tasks: Task[] = [];
 
-let tasks: Task[] = [];
+type TaskUpdateFields = Partial<Omit<Task, "id">>
 
-function createTask(title: string): Task {
-    return {
+function createTask(title: string): void {
+    TaskManager.addItems({
         id: Date.now(),
         title: title,
         status: TaskStatus.Open
-        // completedOn will only be added afer task status is closed
-    }
+    })
+    // return {
+    //     id: Date.now(),
+    //     title: title,
+    //     status: TaskStatus.Open
+    //     // completedOn will only be added afer task status is closed
+    // }
 }
-const newTask = createTask("Check ECWoC projects")
-tasks.push(newTask)
+createTask("Check ECWoC projects")
+// tasks.push(newTask)
 
-function getTask(id: number): Task | undefined {
-    return tasks.find(t => t.id === id)
+
+
+function isEmailTask(obj: any): obj is EmailTask {
+    return (obj as EmailTask).recipient !== undefined
+}
+
+// Signature 1: If I pass a number, it's an ID
+function getTask(id: number): Task | undefined;
+
+// Signature 2: If I pass a string, it's a Title
+// function getTask(title: string): Task | undefined;
+
+function getTask(arg: number | string): Task | undefined {
+    if (typeof (arg) === "number") {
+        return TaskManager.findById(arg)
+    }
+    // else {
+    //     return TaskManager.findByTitle(arg)
+    // }
 }
 
 function completeTask(id: number): void {
-    const task = getTask(id)
+    const task = TaskManager.findById(id)
     if (task !== undefined) {
         task.status = TaskStatus.Closed
         task.completedOn = new Date()
@@ -43,6 +56,7 @@ function completeTask(id: number): void {
         console.log(`Task not found`)
     }
 }
+
 // let projectConfig: [string, number, boolean] = ["Tyspescript Migration", 6, true]
 // creating a tuple in ts
 

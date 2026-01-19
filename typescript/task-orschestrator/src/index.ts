@@ -19,6 +19,8 @@ function createTask(title: string): void {
     //     // completedOn will only be added afer task status is closed
     // }
 }
+
+
 createTask("Check ECWoC projects")
 // tasks.push(newTask)
 

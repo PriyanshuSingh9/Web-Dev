@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const password = new mongoose.Schema({
+const passwordSchema = new mongoose.Schema({
     url: {
         type: String,
         required: true
@@ -9,10 +9,10 @@ const password = new mongoose.Schema({
         type: String,
         required: true
     },
-    pasword: {
+    password: {
         type: String,
         required: true
     }
 })
 
-export default mongoose.model("password", password)
+export default mongoose.model("Password", passwordSchema)

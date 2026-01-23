@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 export const fetchPasswords = async (req: Request, res: Response) => {
     try {
-        const passwords = Password.find({})
+        const passwords = await Password.find({})
         console.log(passwords)
         res.status(200).json(passwords)
     } catch (error) {

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import type { SubmitHandler } from "react-hook-form"
 import Table from './Table'
+
 
 type Inputs = {
     url: string,
@@ -10,18 +10,14 @@ type Inputs = {
 }
 
 const Manager = () => {
-    const [passwordArray, setPasswordArray] = useState<Inputs[]>([])
-
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors, isSubmitting },
     } = useForm<Inputs>()
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        setPasswordArray([...passwordArray, data])
-        reset()
+        console.log(data)
     }
 
     return (
@@ -35,32 +31,32 @@ const Manager = () => {
             </div>
 
             <div className='m-auto max-w-6xl'>
-                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 p-4'>
+                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
                     <div>
                         <input
                             type="url"
                             placeholder='Enter the website url'
-                            className='bg-amber-50 text-black p-1.5 px-4 rounded-full min-w-full border border-green-400 focus:outline-green-600'
+                            className='bg-amber-50 text-black p-1.5 rounded-full min-w-full border border-green-400'
                             {...register("url", { required: "Website URL is missing" })}
                         />
                         {errors.url && <span className="text-red-500 text-sm px-2">{errors.url.message}</span>}
                     </div>
 
                     <div className='grid grid-cols-12 gap-2'>
-                        <div className="col-span-12 md:col-span-7">
+                        <div className="col-span-7">
                             <input
                                 type="text"
                                 placeholder='Enter username'
-                                className='bg-amber-50 text-black p-1.5 px-4 rounded-full w-full border border-green-400 focus:outline-green-600'
+                                className='bg-amber-50 text-black p-1.5 rounded-full w-full border border-green-400'
                                 {...register("username", { required: "Username missing" })}
                             />
                             {errors.username && <span className="text-red-500 text-sm px-2">{errors.username.message}</span>}
                         </div>
-                        <div className="col-span-12 md:col-span-5">
+                        <div className="col-span-5">
                             <input
                                 type="password"
                                 placeholder='Enter password'
-                                className='bg-amber-50 text-black p-1.5 px-4 rounded-full w-full border border-green-400 focus:outline-green-600'
+                                className='bg-amber-50 text-black p-1.5 rounded-full w-full border border-green-400'
                                 {...register("password", { required: "Password missing" })}
                             />
                             {errors.password && <span className="text-red-500 text-sm px-2">{errors.password.message}</span>}
@@ -71,14 +67,14 @@ const Manager = () => {
                         <button
                             type='submit'
                             disabled={isSubmitting}
-                            className='bg-green-500 px-6 py-2 flex items-center gap-2 rounded-full border border-green-700 hover:bg-green-400 transition-all font-bold text-black'
+                            className='bg-green-500 px-4 py-2 flex items-center gap-2 rounded-full border border-green-700 hover:bg-green-400 transition-all font-bold'
                         >
-                            Save Password
+                            Save
                         </button>
                     </div>
                 </form>
             </div>
-            <Table passwords={passwordArray} />
+            {/* <Table /> */}
         </div>
     )
 }

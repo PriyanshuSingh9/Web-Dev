@@ -1,12 +1,7 @@
 // import React from 'react'
+import type { passwordEntry } from "../types"
 
-type Props = {
-    url: string,
-    username: string,
-    password: string
-}
-
-const Table = (Data: Props[]) => {
+const Table = (passwords: passwordEntry[]) => {
     return (
         <div className="max-w-7xl mx-auto my-2">
             <div className="mt-8">
@@ -19,7 +14,7 @@ const Table = (Data: Props[]) => {
                 <li className="min-w-2/12 p-1 flex justify-center">Actions</li>
             </ul>
             <div>
-                {Data.map((data) => (
+                {passwords.map((data) => (
                     <div></div>
                 ))}
             </div>

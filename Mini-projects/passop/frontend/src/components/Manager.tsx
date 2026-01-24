@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form"
 import type { SubmitHandler } from "react-hook-form"
 import Table from './Table'
+import { useContext } from "react"
+
+import { loadContext } from "../context/context"
 
 
 type Inputs = {
@@ -10,6 +13,8 @@ type Inputs = {
 }
 
 const Manager = () => {
+    const value = useContext(loadContext)
+
     const {
         register,
         handleSubmit,
@@ -74,7 +79,7 @@ const Manager = () => {
                     </div>
                 </form>
             </div>
-            {/* <Table /> */}
+            {value.loading ? <p>loading</p> : <Table />}
         </div>
     )
 }

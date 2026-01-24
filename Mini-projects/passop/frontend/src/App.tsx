@@ -5,12 +5,13 @@ import Footer from './components/Footer'
 
 import type { passwordEntry } from './types'
 import { useState, useEffect } from 'react'
-import Table from './components/Table'
+
+import { errorContext, loadContext } from './context/context'
 
 
 function App() {
   const [loading, setLoading] = useState(true)
-  const [error, seterror] = useState(false)
+  const [error, setError] = useState(false)
 
   const [passwordEntries, setPasswordEntries] = useState<passwordEntry[]>([])
 
@@ -23,7 +24,7 @@ function App() {
         setPasswordEntries(data)
       }
     } catch (error) {
-      seterror(true)
+      setError(true)
     }
     finally {
       setLoading(false)
@@ -37,10 +38,13 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Manager />
-      {loading ? <p>loading</p> : <Table passwords={passwordEntries} />}
-      <Footer />
+      <errorContext.Provider value={{ error, setError }}>
+        <loadContext.Provider value={{ loading, setLoading }}>
+          <Navbar />
+          <Manager />
+          <Footer />
+        </loadContext.Provider>
+      </errorContext.Provider>
     </>
   )
 }

@@ -1,7 +1,8 @@
 // import React from 'react'
 import type { passwordEntry } from "../types"
 
-const Table = (passwords: passwordEntry[]) => {
+// passwords is a separate object thus we wrap it in {} to destructure it as an array of type passwordEntry
+const Table = ({ passwords }: { passwords: passwordEntry[] }) => {
     return (
         <div className="max-w-7xl mx-auto my-2">
             <div className="mt-8">
@@ -15,7 +16,7 @@ const Table = (passwords: passwordEntry[]) => {
             </ul>
             <div>
                 {passwords.map((data) => (
-                    <div></div>
+                    <div>{data.url}</div>
                 ))}
             </div>
         </div>

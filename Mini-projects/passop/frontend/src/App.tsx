@@ -7,6 +7,7 @@ import type { passwordEntry } from './types'
 import { useState, useEffect } from 'react'
 
 import { errorContext, loadContext } from './context/context'
+import type { passwordEntrySlice } from './redux/passwordEntry/passwordEntrySlice'
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   async function fetchPasswordEntries(): Promise<void> {
     try {
       setLoading(true)
-      const res = await fetch("http://localhost:5000/")
+      const res = await fetch("http://localhost:5000/passop/passwords/")
       if (res.ok) {
         const data: passwordEntry[] = await res.json()
         setPasswordEntries(data)
@@ -41,7 +42,7 @@ function App() {
       <errorContext.Provider value={{ error, setError }}>
         <loadContext.Provider value={{ loading, setLoading }}>
           <Navbar />
-          <Manager />
+          <Manager passwords={passwordEntries} />
           <Footer />
         </loadContext.Provider>
       </errorContext.Provider>

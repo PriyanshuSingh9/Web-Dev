@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react"
 
 export type passwordEntry = {
+    _id?: string,
     url: string,
     username: string,
     password: string

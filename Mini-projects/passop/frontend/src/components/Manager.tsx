@@ -79,7 +79,7 @@ const Manager = () => {
                     </div>
                 </form>
             </div>
-            {value.loading ? <p>loading</p> : <Table />}
+            {/* {value.loading ? <p>loading</p> : <Table />} */}
         </div>
     )
 }

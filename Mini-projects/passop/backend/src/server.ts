@@ -13,7 +13,7 @@ app.use(cors({
 
 app.use(express.json())
 
-app.use("/password", passwordRoutes)
+app.use("/passop/passwords", passwordRoutes)
 
 mongoose.connect("mongodb://127.0.0.1:27017/passop")
     .then(() => {

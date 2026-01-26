@@ -1,5 +1,8 @@
 // import React from 'react'
 import type { passwordEntry } from "../types"
+import { useSelector, useDispatch } from "react-redux"
+
+import { fetchEntry, addEntry, deleteEntry } from "../redux/passwordEntry/passwordEntrySlice"
 
 // passwords is a separate object thus we wrap it in {} to destructure it as an array of type passwordEntry
 const Table = ({ passwords }: { passwords: passwordEntry[] }) => {

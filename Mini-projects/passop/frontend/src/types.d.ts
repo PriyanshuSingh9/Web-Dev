@@ -19,3 +19,9 @@ export interface ErrorContextType {
     error: boolean,
     setError: Dispatch<SetStateAction<boolean>>
 }
+
+export interface PasswordState {
+    value: passwordEntry[];
+    loading: boolean;
+    error: string | null;
+}

@@ -1,13 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit"
-import type { passwordEntry } from "../../types";
+import type { passwordEntry, PasswordState } from "../../types";
 
 // Define the state structure
-interface PasswordState {
-    value: passwordEntry[];
-    loading: boolean;
-    error: string | null;
-}
+
 
 const initialState: PasswordState = {
     value: [],
@@ -18,11 +14,16 @@ const initialState: PasswordState = {
 export const fetchEntry = createAsyncThunk(
     "passwordEntry/fetchEntry",
     async () => {
-        const response = await fetch("http://localhost:5000/passop/passwords/")
-        if (!response.ok) {
-            throw new Error("Failed to add entry");
+        try {
+
+            const response = await fetch("http://localhost:5000/passop/passwords/")
+            if (!response.ok) {
+                throw new Error("Failed to add entry");
+            }
+            return await response.json();
+        } catch (error) {
+            console.log(error)
         }
-        return await response.json();
     }
 )
 
@@ -83,19 +84,7 @@ export const passwordEntrySlice = createSlice({
             })
             // Handle deleteEntry
             .addCase(deleteEntry.fulfilled, (state, action: PayloadAction<string>) => {
-                // Assuming the entry has an '_id' property. 
-                // We'll need to cast or ensure types match, but for now we filter by comparing properties or ID if available.
-                // Since `passwordEntry` type doesn't explicitly have an ID, we might need to adjust logic or types.
-                // For this fix, I'll assume we are filtering out by the returned ID if it was part of the object.
-                // However, without an ID in the type, we might face issues. 
-                // Ideally, `passwordEntry` should have an optional `_id`.
-                // Checking types.d.ts, it doesn't. 
-                // We will attempt to filter by a generated logic or rely on the backend response.
-
-                // If the backend returns the deleted ID, we remove the item.
-                // NOTE: Since we don't have _id in the type, this is a best-effort fix.
-                // You should update your types to include _id.
-                state.value = state.value.filter((item: any) => item._id !== action.payload);
+                state.value = state.value.filter((item: passwordEntry) => item._id !== action.payload);
             });
     }
 });

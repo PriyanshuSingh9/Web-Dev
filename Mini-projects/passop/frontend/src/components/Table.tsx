@@ -15,7 +15,6 @@ const Table = () => {
 
     const copyText = (text: string) => {
         navigator.clipboard.writeText(text)
-        // Ideally we would show a toast here to inform the user
     }
 
     const handleDelete = (id: string) => {

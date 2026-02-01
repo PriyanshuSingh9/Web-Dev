@@ -15,7 +15,6 @@ export const fetchEntry = createAsyncThunk(
     "passwordEntry/fetchEntry",
     async () => {
         try {
-
             const response = await fetch("http://localhost:5000/passop/passwords/")
             if (!response.ok) {
                 throw new Error("Failed to add entry");
@@ -70,6 +69,18 @@ export const passwordEntrySlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // Handle fetchEntry
+            .addCase(fetchEntry.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchEntry.fulfilled, (state, action: PayloadAction<passwordEntry[]>) => {
+                state.loading = false;
+                state.value = action.payload;
+            })
+            .addCase(fetchEntry.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || "Failed to fetch entries";
+            })
             // Handle addEntry
             .addCase(addEntry.pending, (state) => {
                 state.loading = true;

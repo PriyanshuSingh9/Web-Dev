@@ -21,7 +21,7 @@ export const addPassword = async (req: Request, res: Response) => {
             password
         })
         console.log(row)
-        res.status(200).json({ message: "Failed to create password" })
+        res.status(200).json(row)
 
     } catch (error) {
         res.status(500).json({ message: "Failed to create password" })

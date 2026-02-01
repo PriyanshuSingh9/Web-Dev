@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form"
 import type { SubmitHandler } from "react-hook-form"
 import Table from './Table'
-import { useContext } from "react"
 
-import { loadContext } from "../context/context"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "../redux/store"
+import { addEntry } from "../redux/passwordEntry/passwordEntrySlice"
+
 
 
 type Inputs = {
@@ -13,16 +15,18 @@ type Inputs = {
 }
 
 const Manager = () => {
-    const value = useContext(loadContext)
+    const dispatch = useDispatch<AppDispatch>()
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors, isSubmitting },
     } = useForm<Inputs>()
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
+        dispatch(addEntry(data))
+        reset()
     }
 
     return (
@@ -80,6 +84,7 @@ const Manager = () => {
                 </form>
             </div>
             {/* {value.loading ? <p>loading</p> : <Table />} */}
+            <Table />
         </div>
     )
 }

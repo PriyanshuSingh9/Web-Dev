@@ -12,7 +12,7 @@ To ensure scalability, type safety, and maintainability, the project will use th
 *   **Language:** TypeScript (Strict Mode)
 *   **Styling:** Tailwind CSS + **Shadcn/UI** (Headless components)
 *   **Authentication:** **Auth.js (v5)** (formerly NextAuth.js) with GitHub Provider
-*   **Database:** MongoDB via **Prisma ORM**
+*   **Database:** MongoDB via **Mongoose ODM**
 *   **Forms & Validation:** **React Hook Form** + **Zod** schema validation
 *   **Payments:** Razorpay API (with Webhook verification)
 *   **Deployment:** Docker / Vercel
@@ -57,6 +57,11 @@ app/
 │   ├── auth/           # Auth.js endpoints
 │   └── webhooks/       # Razorpay webhook handler
 └── components/         # Shadcn & Custom components
+lib/
+└── db.ts               # Mongoose connection helper
+models/                 # Mongoose schemas/models
+├── User.ts
+└── Payment.ts
 ```
 
 ### 4.2 Key Components
@@ -67,12 +72,12 @@ app/
 
 ## 5. Data & State Strategy
 
-### 5.1 Database Schema (Prisma)
-*   **User:** `id`, `email`, `username`, `image`, `coverImage`, `razorpayCredentials`, `createdAt`
-*   **Payment:** `id`, `amount`, `message`, `fromUser` (optional), `toUser` (relation), `orderId`, `status`, `timestamp`
+### 5.1 Database Schema (Mongoose)
+*   **User Model:** `name`, `email`, `username`, `image`, `coverImage`, `razorpayId`, `razorpaySecret`, `createdAt`
+*   **Payment Model:** `donor`, `to_user` (username), `order_id` (orderId), `message`, `amount`, `createdAt`, `updatedAt`, `done` (boolean)
 
 ### 5.2 State Management
-*   **Server State:** Native **Server Components** for fetching data. Data is fetched directly on the server and passed to components.
+*   **Server State:** Native **Server Components** for fetching data. Data is fetched directly on the server using Mongoose and passed to components.
 *   **Form State:** **React Hook Form** for all inputs to minimize re-renders and handle validation logic efficiently.
 *   **Mutations:** Next.js **Server Actions** for all data modifications (Update Profile, Initiate Payment). Use `revalidatePath` to refresh UI data after mutations.
 
@@ -81,18 +86,18 @@ app/
 ### Phase 1: Setup & Infrastructure
 *   Initialize Next.js 15 project with TypeScript and Tailwind.
 *   Install and configure **Shadcn/UI** (Button, Input, Card, Dropdown components).
-*   Set up **Prisma** with MongoDB connection string.
+*   Set up **Mongoose** connection helper and environment variables.
 *   Configure **Docker** for consistent development environment.
 
 ### Phase 2: Authentication & Schema
-*   Define Prisma Schema for `User` and `Payment`.
+*   Define Mongoose Models for `User` and `Payment`.
 *   Configure **Auth.js v5** with GitHub provider.
 *   Create `middleware.ts` to protect dashboard routes.
 
 ### Phase 3: Dashboard & Profile Features
 *   Build the Dashboard using **React Hook Form** + **Zod**.
 *   Implement `updateProfile` Server Action.
-*   Create dynamic `/[username]` page fetching data via Prisma.
+*   Create dynamic `/[username]` page fetching data via Mongoose.
 *   Implement `next/image` for optimized asset loading (User avatars/covers).
 
 ### Phase 4: Payments Integration

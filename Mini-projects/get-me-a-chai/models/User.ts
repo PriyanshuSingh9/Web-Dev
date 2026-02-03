@@ -13,4 +13,4 @@ const userSchema = new mongoose.Schema<userType>({
 
 // Next.js recompiles files constantly. mongoose.model("Users", ...) tries to create the model every time,
 // leading to an OverwriteModelError.
-export default mongoose.models.Users || mongoose.model("Users", userSchema);
+export default mongoose.models.User || mongoose.model("User", userSchema);

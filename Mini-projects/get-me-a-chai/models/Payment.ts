@@ -12,4 +12,4 @@ const paymentSchema = new mongoose.Schema<paymentType>({
 
 // Next.js recompiles files constantly. mongoose.model("Users", ...) tries to create the model every time,
 // leading to an OverwriteModelError.
-export default mongoose.models.Payments || mongoose.model("Payments", paymentSchema);
+export default mongoose.models.Payment || mongoose.model("Payment", paymentSchema);

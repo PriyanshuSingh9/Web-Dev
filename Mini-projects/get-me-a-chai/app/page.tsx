@@ -4,8 +4,11 @@ export default function Home() {
   return <>
     <div className="flex flex-col justify-center items-center p-15 text-white gap-5 border-b-3 border-gray-800">
 
-      <div className="flex flex-col justify-center items-center ">
-        <h1 className="font-bold text-5xl">Buy me a Chai</h1>
+      <div className="flex flex-col justify-center items-center">
+        <h1 className="font-bold text-5xl flex justofy-center items-center gap-2">
+          Buy me a Chai
+          <span><Image src="/tea.gif" height={88} width={88} alt="tea" /></span>
+        </h1>
         <div className="flex flex-col justify-center items-center p-4">
           <p >A crowdfunding platform for creators to fund their projects</p>
           <p>A place where fans can buy you a chai. Unleash the power of your fans and get your projects funded.</p>

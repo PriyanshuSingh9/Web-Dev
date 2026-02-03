@@ -1,112 +1,119 @@
-# Project Requirements Document: Get Me A Chai
-
-This document outlines the roadmap for building "Get Me A Chai," a crowdfunding platform where creators can receive support from their audience. This plan strictly adheres to modern web development standards, utilizing a robust tech stack for production-grade quality.
+# Project Requirements Document: Get Me A Chai (v1)
 
 ## 1. Project Overview
-"Get Me A Chai" is a web application allowing users to create profiles, accept financial support (chai) via Razorpay, and display a leaderboard of supporters. It mimics functionality found in platforms like "Buy Me a Coffee."
+**Get Me A Chai** is a creator support platform similar to *Buy Me a Coffee* or *Patreon*. It allows creators to build a public profile and receive direct financial support from their audience via Razorpay.
 
-## 2. Technical Stack
-To ensure scalability, type safety, and maintainability, the project will use the following modern technologies:
+**v1 Philosophy:** This version is intentionally built as a "MERN-style" app using MongoDB Atlas and client-side data fetching (`useEffect`). The architecture mimics a relational structure to facilitate a smooth migration to PostgreSQL in v2.
 
-*   **Framework:** Next.js 15 (App Router)
-*   **Language:** TypeScript (Strict Mode)
-*   **Styling:** Tailwind CSS + **Shadcn/UI** (Headless components)
-*   **Authentication:** **Auth.js (v5)** (formerly NextAuth.js) with GitHub Provider
-*   **Database:** MongoDB via **Mongoose ODM**
-*   **Forms & Validation:** **React Hook Form** + **Zod** schema validation
-*   **Payments:** Razorpay API (with Webhook verification)
-*   **Deployment:** Docker / Vercel
+| Component          | Choice                  | Rationale for v1                                                     |
+| :----------------- | :---------------------- | :------------------------------------------------------------------- |
+| **Framework** | Next.js 15 (App Router) | Modern standard, ready for v2 migration. |
+| **Language** | TypeScript | Type safety for data models. |
+| **Authentication** | Auth.js v5 (NextAuth) | GitHub & Google providers. |
+| **Database** | Local MongoDB | Faster dev, easy setup, flexible schema. |
+| **ODM** | Mongoose | Relational-style modeling. |
+| **Payments** | Razorpay | Direct payments to creator's account. |
+| **Backend Logic**  | Hybrid (Actions + API)  | Server Actions for private mutations; API for public/3rd-party data. |
+| **Styling**        | Tailwind CSS            | Rapid UI development.                                                |
 
-## 3. Core Functional Requirements
+## 3. Core Features & User Stories
 
 ### 3.1 Authentication
-*   **Social Login:** GitHub authentication via Auth.js.
-*   **User Onboarding:** Automatic database record creation upon first login.
-*   **Session Management:** Secure session handling using Auth.js server-side helpers and client-side hooks.
+*   **Sign In:** Users can sign in using GitHub or Google.
+*   **Auto-Registration:** First-time login automatically creates a `User` document in MongoDB.
+*   **Session:** Stateless JWT-based sessions (no database session storage).
+*   **Implementation:** Handled via Auth.js API callbacks.
 
-### 3.2 User Dashboard (Protected)
-*   **Profile Management:** Form to update display name, email, username, profile picture, and cover image.
-*   **Payment Credentials:** Secure input fields for Razorpay Key ID and Secret (required to receive payments).
-*   **Tech Spec:** Protected route (`/dashboard`) utilizing Server Actions for data mutation.
+### 3.2 Creator Dashboard (`/dashboard`)
+*   **Protected Route:** Only accessible to logged-in users.
+*   **Mutations (Server Actions):** Users can update their:
+    *   **Profile:** Display Name, Username, Image URL, Cover Image URL.
+    *   **Settings:** Theme toggles.
+    *   **Credentials:** Razorpay Key ID and Secret.
 
-### 3.3 Dynamic Public Profile (`/[username]`)
-*   **Visuals:** Display user's cover image, profile picture, and bio.
-*   **Stats:** Show total amount raised and total supporter count.
-*   **Payment Interface:** Interactive section for supporters to choose an amount and leave a message.
-*   **Leaderboard:** Real-time list of recent supporters sorted by date or amount.
+### 3.3 Public Profile (`/[username]`)
+*   **Public Access:** Anyone can view a creator's profile (e.g., `/priyanshu`).
+*   **Data Fetching (API):** Client-side `useEffect` fetches:
+    *   Visuals (cover, avatar).
+    *   Stats (Total Chai Raised).
+    *   Leaderboard of supporters.
+*   **Payment UI:** Supporters can select an amount, write a message, and pay.
 
 ### 3.4 Payment Processing
-*   **Gateway:** Razorpay integration supporting INR.
-*   **Flow:** Server-side order creation -> Client-side checkout modal -> Server-side webhook verification.
-*   **Security:** Signature verification on the backend to prevent transaction tampering.
+1.  **Initiation:** Supporter enters amount/message -> Frontend calls `/api/payments/create-order`.
+2.  **Checkout:** Razorpay modal opens.
+3.  **Verification:** On success, frontend calls `/api/payments/verify`.
+4.  **Completion:** Backend verifies signature -> Saves `Payment` to DB.
 
-## 4. Architecture & Components
+## 4. Database Schema (Mongoose)
+- *Design Note: MongoDB is used in a relational style (foreign keys, no nesting) to ease future SQL migration.* 
 
-### 4.1 Directory Structure (App Router)
+### 4.1 Users Collection
+```typescript
+{
+  _id: ObjectId,
+  email: String,          // Unique, from Auth provider
+  username: String,       // Unique, user-defined
+  name: String,
+  image: String,          // URL
+  coverImage: String,     // URL
+  razorpayId: String,
+  razorpaySecret: String,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+### 4.2 Payments Collection
+```typescript
+{
+  _id: ObjectId,
+  to_user: String,        // Username of the receiver
+  donor: String,          // Name of the supporter
+  order_id: String,       // Razorpay Order ID
+  amount: Number,
+  message: String,
+  done: Boolean,          // Status: true if verified
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## 5. Specification: API vs. Server Actions
+
+### 5.1 API Routes (Public & External)
+| Method   | Endpoint                | Description                              |
+| :------- | :---------------------- | :--------------------------------------- |
+| **GET**  | `/api/users/[username]` | Public profile data & leaderboard.       |
+| **POST** | `/api/razorpay/create`  | Creates a Razorpay order.                |
+| **POST** | `/api/razorpay/verify`  | Verifies payment signature.              |
+| **ANY**  | `/api/auth/*`           | Auth.js handlers (callbacks, providers). |
+
+### 5.2 Server Actions (Private Mutations)
+| Action Name         | Description                                    |
+| :------------------ | :--------------------------------------------- |
+| `updateProfile`     | Updates name, username, image, and coverImage. |
+| `updateTheme`       | Toggles UI theme settings.                     |
+| `updateCredentials` | Securely saves Razorpay Key ID and Secret.     |
+
+## 6. Architecture & Folder Structure
 ```
 app/
-├── (auth)/             # Route groups for auth pages
-│   └── login/
-├── (marketing)/        # Route groups for landing pages
-│   └── page.tsx
-├── [username]/         # Dynamic profile route
-│   └── page.tsx
-├── dashboard/          # Protected user settings
-│   └── page.tsx
-├── api/
-│   ├── auth/           # Auth.js endpoints
-│   └── webhooks/       # Razorpay webhook handler
-└── components/         # Shadcn & Custom components
-lib/
-└── db.ts               # Mongoose connection helper
-models/                 # Mongoose schemas/models
+├── (auth)/login/       # Login Page
+├── dashboard/          # Private Dashboard
+├── [username]/         # Public Profile Page
+├── api/                # Backend Routes
+│   ├── auth/           # NextAuth handlers
+│   ├── razorpay/       # Payment handlers
+│   └── users/          # User fetching/updating
+models/                 # Mongoose Models
 ├── User.ts
 └── Payment.ts
 ```
 
-### 4.2 Key Components
-*   **`Navbar`:** Responsive navigation with dynamic Auth states (Login btn vs User Dropdown).
-*   **`PaymentPage` (Client Component):** Handles the Razorpay interaction, form state (Amount, Message), and optimistic updates.
-*   **`ProfileCard`:** Reusable component for displaying user stats and info.
-*   **`SupporterList`:** Scrollable list component for the leaderboard.
-
-## 5. Data & State Strategy
-
-### 5.1 Database Schema (Mongoose)
-*   **User Model:** `name`, `email`, `username`, `image`, `coverImage`, `razorpayId`, `razorpaySecret`, `createdAt`
-*   **Payment Model:** `donor`, `to_user` (username), `order_id` (orderId), `message`, `amount`, `createdAt`, `updatedAt`, `done` (boolean)
-
-### 5.2 State Management
-*   **Server State:** Native **Server Components** for fetching data. Data is fetched directly on the server using Mongoose and passed to components.
-*   **Form State:** **React Hook Form** for all inputs to minimize re-renders and handle validation logic efficiently.
-*   **Mutations:** Next.js **Server Actions** for all data modifications (Update Profile, Initiate Payment). Use `revalidatePath` to refresh UI data after mutations.
-
-## 6. Implementation Milestones
-
-### Phase 1: Setup & Infrastructure
-*   Initialize Next.js 15 project with TypeScript and Tailwind.
-*   Install and configure **Shadcn/UI** (Button, Input, Card, Dropdown components).
-*   Set up **Mongoose** connection helper and environment variables.
-*   Configure **Docker** for consistent development environment.
-
-### Phase 2: Authentication & Schema
-*   Define Mongoose Models for `User` and `Payment`.
-*   Configure **Auth.js v5** with GitHub provider.
-*   Create `middleware.ts` to protect dashboard routes.
-
-### Phase 3: Dashboard & Profile Features
-*   Build the Dashboard using **React Hook Form** + **Zod**.
-*   Implement `updateProfile` Server Action.
-*   Create dynamic `/[username]` page fetching data via Mongoose.
-*   Implement `next/image` for optimized asset loading (User avatars/covers).
-
-### Phase 4: Payments Integration
-*   Set up Razorpay account and get API keys.
-*   Implement **Order Creation** Server Action (`razorpay.orders.create`).
-*   Build the Payment UI with predefined amount buttons.
-*   Implement **Webhook** endpoint (`/api/webhooks/razorpay`) to verify signatures and update database status securely.
-
-### Phase 5: Polish & Optimization
-*   Add proper loading states (Skeletons) using Shadcn.
-*   Implement "Leaderboard" logic.
-*   Audit Core Web Vitals and accessibility.
+## 7. Future Roadmap (v2 Migration)
+The v1 codebase is designed to be ephemeral. v2 will introduce:
+*   **Database:** Migration to PostgreSQL + Prisma.
+*   **State:** TanStack Query for caching and optimistic updates.
+*   **Storage:** Cloud (AWS S3/Uploadthing) for actual image uploads.
+*   **Webhooks:** Robust payment processing via Razorpay Webhooks (handling async success/failure).

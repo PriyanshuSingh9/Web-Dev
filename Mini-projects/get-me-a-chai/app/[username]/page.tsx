@@ -10,7 +10,7 @@ import Supporters from '@/components/Supporters';
 import Image from 'next/image';
 import Payment from '@/models/Payment';
 
-const YourPage = async () => {
+const UserPage = async () => {
     const session = await auth()
 
     if (!session) {
@@ -55,16 +55,13 @@ const YourPage = async () => {
 
             <div className='flex flex-col md:flex-row gap-6 max-w-6xl mx-auto px-4'>
                 <div className='bg-slate-900/50 border border-slate-800 flex-1 p-6 rounded-xl backdrop-blur-sm'>
-                    <h2 className='text-xl font-bold mb-4 border-b border-slate-700 pb-2'>Supporters</h2>
                     <Supporters payments={payments} />
                 </div>
-                <div className='flex-1'>
-                    <PaymentForm />
-                </div>
+                <PaymentForm />
             </div >
         </div>
     )
 }
 
-export default YourPage
+export default UserPage
 

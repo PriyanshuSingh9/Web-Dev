@@ -16,7 +16,7 @@ const PaymentForm = () => {
     }
 
     return (
-        <div className='bg-slate-900/50 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm' >
+        <div className='bg-slate-900/50 p-6 rounded-xl border border-slate-800 shadow-xl backdrop-blur-sm flex-1' >
             <h2 className="text-xl font-bold text-white mb-6">Make a Payment</h2>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
                 <div className="flex flex-col gap-1.5">

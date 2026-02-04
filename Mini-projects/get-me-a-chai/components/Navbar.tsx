@@ -21,29 +21,56 @@ const Navbar = async () => {
             </Link>
             {session ?
                 <div className='flex items-center gap-4'>
-                    <Link href="/dashboard">
-                        <GlareHover
-                            width="32px"
-                            height="32px"
-                            glareColor="#ffffff"
-                            glareOpacity={0.6}
-                            glareAngle={-45}
-                            glareSize={150}
-                            background="transparent"
-                            borderColor="transparent"
-                            transitionDuration={600}
-                        >
-                            <Image src={pfp || "/person.png"} height={40} width={40} alt='Profile' className='rounded-full border-2 border-blue-300'></Image>
-                        </GlareHover>
-                    </Link>
-                    <form action={async () => {
-                        "use server";
-                        await signOut()
-                    }}>
-                        <button className='inline-flex p-2 items-center justify-center rounded-md border border-gray-800 bg-[linear-gradient(110deg,#503bef,45%,#8678f9,55%,#503bef)] bg-size-[200%_100%] animate-background-shine px-6 font-bold text-white transition-colors cursor-pointer'>
-                            Logout
+                    <div className="relative group">
+                        <button className="flex items-center">
+                            <Image
+                                src={pfp || "/person.png"}
+                                height={40}
+                                width={40}
+                                alt='Profile'
+                                className='rounded-full border-2 border-blue-300'
+                            />
                         </button>
-                    </form>
+
+                        {/* Dropdown Menu */}
+                        <div className="hidden group-hover:block absolute right-0 top-full pt-2 z-50">
+                            <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl py-1 w-max min-w-[220px]">
+                                <div className='flex items-center gap-3 px-4 py-3 border-b border-gray-700'>
+                                    <div className='shrink-0'>
+                                        <Image
+                                            src={pfp || "/person.png"}
+                                            height={32}
+                                            width={32}
+                                            alt='Profile'
+                                            className='rounded-full border border-gray-600'
+                                        />
+                                    </div>
+                                    <div className="flex flex-col overflow-hidden">
+                                        <div className='font-bold text-sm truncate'>@{session.user?.name}</div>
+                                        <div className='text-xs text-gray-400 truncate'>{session.user?.email}</div>
+                                    </div>
+                                </div>
+                                <div className="py-1">
+                                    <Link href="/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                                        Dashboard
+                                    </Link>
+                                    <Link href={`/${session.user?.name}`} className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                                        Your Profile
+                                    </Link>
+                                </div>
+                                <div className="border-t border-gray-700 py-1">
+                                    <form action={async () => {
+                                        "use server";
+                                        await signOut()
+                                    }}>
+                                        <button type="submit" className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:text-red-300 transition-colors">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 :
                 <Link href='/login'>

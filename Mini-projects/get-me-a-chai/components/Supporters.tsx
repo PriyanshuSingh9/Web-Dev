@@ -12,7 +12,8 @@ const Supporters = ({ payments }: { payments: paymentType[] }) => {
     }
 
     return (
-        <div className="mt-4 flex flex-col gap-3 max-h-75 overflow-y-auto pr-2 custom-scrollbar">
+        <div className="mt-4 flex flex-col gap-3 pr-2">
+            <h2 className='text-xl font-bold mb-4 border-b border-slate-700 pb-2'>Supporters</h2>
             {payments.map((payment, index) => (
                 <div key={index} className="bg-slate-900 p-3 rounded-lg border border-slate-800 flex flex-col gap-1">
                     <div className="flex justify-between items-center">

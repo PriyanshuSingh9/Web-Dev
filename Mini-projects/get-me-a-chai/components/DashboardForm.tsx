@@ -2,8 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { updateProfile } from '@/actions/useractions';
 import { useState } from 'react';
+import { userType } from '@/types';
 
-const DashboardForm = ({ user }: { user: any }) => {
+const DashboardForm = ({ user }: { user: userType }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const {

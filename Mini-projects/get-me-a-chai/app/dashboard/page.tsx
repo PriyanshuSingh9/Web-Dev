@@ -12,7 +12,10 @@ const Dashboard = async () => {
     }
 
     await connectDB()
-    const user = await User.findOne({ email: session.user?.email }).lean()
+    const userDoc = await User.findOne({ email: session.user?.email }).lean()
+
+    // Serialize the object to handle ObjectId and Date types
+    const user = JSON.parse(JSON.stringify(userDoc))
 
     return (
         <DashboardForm user={user} />

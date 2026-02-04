@@ -1,11 +1,9 @@
 import React from 'react'
-
 import User from '@/models/User';
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import mongoose from 'mongoose';
-
 import connectDB from '@/lib/db';
+import DashboardForm from '@/components/DashboardForm';
 
 const Dashboard = async () => {
     const session = await auth()
@@ -14,13 +12,10 @@ const Dashboard = async () => {
     }
 
     await connectDB()
-    const user = await User.findOne({ email: session.user?.email })
+    const user = await User.findOne({ email: session.user?.email }).lean()
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <p>Welcome, {user?.name}</p>
-        </div>
+        <DashboardForm user={user} />
     )
 }
 

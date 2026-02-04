@@ -40,9 +40,9 @@ const Navbar = async () => {
                         "use server";
                         await signOut()
                     }}>
-                        {/* <button className='inline-flex p-2 items-center justify-center rounded-md border border-gray-800 bg-[linear-gradient(110deg,#503bef,45%,#8678f9,55%,#503bef)] bg-[length:200%_100%] animate-background-shine px-6 font-bold text-white transition-colors cursor-pointer'>
+                        <button className='inline-flex p-2 items-center justify-center rounded-md border border-gray-800 bg-[linear-gradient(110deg,#503bef,45%,#8678f9,55%,#503bef)] bg-size-[200%_100%] animate-background-shine px-6 font-bold text-white transition-colors cursor-pointer'>
                             Logout
-                        </button> */}
+                        </button>
                     </form>
                 </div>
                 :

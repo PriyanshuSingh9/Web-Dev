@@ -34,7 +34,7 @@ const Navbar = async () => {
 
                         {/* Dropdown Menu */}
                         <div className="hidden group-hover:block absolute right-0 top-full pt-2 z-50">
-                            <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl py-1 w-max min-w-[220px]">
+                            <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl py-1 w-max min-w-55">
                                 <div className='flex items-center gap-3 px-4 py-3 border-b border-gray-700'>
                                     <div className='shrink-0'>
                                         <Image

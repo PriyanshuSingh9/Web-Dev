@@ -10,18 +10,23 @@ import Supporters from '@/components/Supporters';
 import Image from 'next/image';
 import Payment from '@/models/Payment';
 
-const UserPage = async () => {
+const UserPage = async ({ params }: { params: Promise<{ username: string }> }) => {
+    const { username } = await params;
     const session = await auth()
 
-    if (!session) {
-        redirect("/login")
+    await connectDB()
+    const user = await User.findOne({ username }).lean()
+
+    if (!user) {
+        return (
+            <div className="flex items-center justify-center min-h-screen text-white">
+                <h1 className="text-2xl">User not found</h1>
+            </div>
+        )
     }
 
-    await connectDB()
-    const user = await User.findOne({ email: session.user?.email }).lean()
-
     // Fetch payments sorted by newest first and only completed ones
-    const payments = await Payment.find({ to_user: user?.email, done: true })
+    const payments = await Payment.find({ to_user: username, done: true })
         .sort({ createdAt: -1 })
         .lean()
 

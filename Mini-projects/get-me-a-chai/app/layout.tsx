@@ -5,6 +5,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import SessionWrapper from "@/components/SessionWrapper";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,7 +36,9 @@ export default function RootLayout({
           <Navbar />
           <div className="fixed top-0 left-0 z-[-2] min-h-screen w-full bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-size-[20px_20px]"></div>
           <main className="flex-1">
-            {children}
+            <SessionWrapper>
+              {children}
+            </SessionWrapper>
           </main>
           <Footer />
         </div>

@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Get Me A Chai ☕
 
-## Getting Started
+A crowdfunding platform for creators, built with the latest Next.js 15 features. This project allows users to create a profile, accept support from fans, and manage their dashboard.
 
-First, run the development server:
+**Status:** 🚧 Archived / Prototype
+*This project serves as a proof-of-concept for Next.js Server Actions and Authentication patterns. Payment integration is currently UI-only.*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Language:** TypeScript
+- **Auth:** [NextAuth.js v5](https://authjs.dev/) (Beta)
+- **Database:** MongoDB (via Mongoose)
+- **Styling:** Tailwind CSS
+- **Forms:** React Hook Form
+- **Server Actions:** Used for all data mutations (no API routes)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features Implemented
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Authentication:** GitHub and Google OAuth login via NextAuth v5.
+- **Dynamic Profile Pages:** Public-facing pages (e.g., `/[username]`) showing creator details and top supporters.
+- **Dashboard:** User dashboard to update profile details (Name, Cover Image, Razorpay credentials).
+- **Responsive UI:** Dark-themed, mobile-responsive design with Tailwind.
+- **Data Fetching:** Server-side rendering (SSR) for fast profile loads and SEO.
 
-## Learn More
+## 🛠️ Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+1.  **Clone the repo:**
+    ```bash
+    git clone https://github.com/yourusername/get-me-a-chai.git
+    cd get-me-a-chai
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3.  **Environment Variables:**
+    Create a `.env` file in the root:
+    ```env
+    MONGODB_URI=your_mongodb_connection_string
+    AUTH_SECRET=your_nextauth_secret
+    AUTH_GITHUB_ID=your_github_id
+    AUTH_GITHUB_SECRET=your_github_secret
+    AUTH_GOOGLE_ID=your_google_id
+    AUTH_GOOGLE_SECRET=your_google_secret
+    ```
 
-## Deploy on Vercel
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔮 Future Improvements (If revisited)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Razorpay Integration:** Connect the `PaymentForm` to actual Razorpay order creation.
+- **Input Validation:** Add Zod schemas to Server Actions for strict type safety.
+- **Loading UI:** Add `loading.tsx` skeletons for smoother transitions.
+
+---
+*Created as a learning project to explore the capabilities of Next.js 15.*

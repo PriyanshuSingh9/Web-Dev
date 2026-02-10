@@ -1,8 +1,11 @@
 "use client"
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { intializePayments } from '@/actions/paymentActions'
+import { userType } from '@/types'
+import { useSession } from 'next-auth/react'
 
-const PaymentForm = () => {
+const PaymentForm = ({ username }: { username: string }) => {
     const {
         register,
         handleSubmit,
@@ -10,9 +13,22 @@ const PaymentForm = () => {
         reset
     } = useForm()
 
-    const onSubmit = (data: any) => {
+    const { data: session } = useSession()
+    const currentUser = session?.user as userType
+
+    const onSubmit = async (data: any) => {
+        // "use server"
+        if (!currentUser) {
+            alert("Please login to make a payment")
+            return
+        }
         reset()
-        console.log(data)
+        try {
+            const responseData = await intializePayments(data.amount, data.to_username, currentUser, data.message)
+            console.log("Order Created:", responseData)
+        } catch (err) {
+            console.error("Payment Error:", err)
+        }
     }
 
     return (
@@ -24,7 +40,7 @@ const PaymentForm = () => {
                         type="text"
                         placeholder='Enter username'
                         className='w-full bg-slate-800 rounded-lg border border-slate-700 px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all'
-                        {...register("username", { required: true })}
+                        {...register("to_username", { required: true })}
                     />
                 </div>
 

@@ -30,7 +30,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 const dbUser = await User.findOne({ email: session.user.email })
                 if (dbUser) {
                     session.user.name = dbUser.username // Use username as display name if preferred
-                    // You can add more fields to session here if needed
                 }
             }
             return session

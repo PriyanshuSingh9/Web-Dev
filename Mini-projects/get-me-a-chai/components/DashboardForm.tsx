@@ -25,6 +25,7 @@ const DashboardForm = ({ user }: { user: userType }) => {
 
     const formSubmit = async (data: any) => {
         setIsSubmitting(true);
+        console.log("Data submitted from form:", data); // Added console.log
         try {
             await updateProfile(data);
             alert("Profile updated successfully!");
@@ -55,6 +56,7 @@ const DashboardForm = ({ user }: { user: userType }) => {
                     <input
                         className="w-full bg-slate-800/50 rounded-lg border border-slate-700 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                         type="email"
+                        readOnly // Added readOnly attribute
                         {...register("email", { required: true })}
                     />
                 </div>

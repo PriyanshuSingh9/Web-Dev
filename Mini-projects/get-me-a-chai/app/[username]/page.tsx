@@ -26,7 +26,7 @@ const UserPage = async ({ params }: { params: Promise<{ username: string }> }) =
     }
 
     // Fetch payments sorted by newest first and only completed ones
-    const payments = await Payment.find({ to_user: username, done: true })
+    const payments = await Payment.find({ to_user: username })
         .sort({ createdAt: -1 })
         .lean()
 
@@ -62,7 +62,7 @@ const UserPage = async ({ params }: { params: Promise<{ username: string }> }) =
                 <div className='bg-slate-900/50 border border-slate-800 flex-1 p-6 rounded-xl backdrop-blur-sm'>
                     <Supporters payments={payments} />
                 </div>
-                <PaymentForm />
+                <PaymentForm username={user.username} />
             </div >
         </div>
     )

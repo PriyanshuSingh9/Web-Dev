@@ -3,15 +3,18 @@ import connectDB from "@/lib/db";
 import Payment from "@/models/Payment";
 import { Cashfree, CFEnvironment } from "cashfree-pg";
 import User from "@/models/User";
-import { OrderRequest, paymentType, userType } from "@/types/types";
+import { OrderRequest, userType } from "@/types/types";
 
 export async function intializePayments(amount: number, to_username: string, donor: userType, message: string): Promise<any> {
     console.log("intializePayments called with:", { amount, to_username, donorName: donor?.name, donorEmail: donor?.email });
     await connectDB()
 
-    const recipient = await User.findOne({ username: to_username })
+    const recipient: userType | null = await User.findOne({ username: to_username })
     if (!recipient) {
         throw new Error("User not found")
+    }
+    if (!recipient.cashfreeClientId || !recipient.cashfreeClientSecret) {
+        throw new Error("User does not have cashfree configured")
     }
     const cashfree = new Cashfree(
         CFEnvironment.SANDBOX,
@@ -20,7 +23,7 @@ export async function intializePayments(amount: number, to_username: string, don
     )
 
     const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
-    const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${to_username}?payment=done`
+    const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${donor}?payment=done`
 
     try {
         const request: OrderRequest = {

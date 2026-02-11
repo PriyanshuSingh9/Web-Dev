@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 
 import { signIn } from '@/auth'
+import { redirect } from 'next/navigation'
 
 const Login = () => {
     return (
@@ -16,7 +17,7 @@ const Login = () => {
 
                 <form action={async () => {
                     "use server"
-                    await signIn("github")
+                    await signIn("github", { redirectTo: "/dashboard" })
                 }}>
                     <button type="submit" className='inline-flex h-12 items-center justify-center rounded-md border border-gray-800 bg-slate-900 hover:bg-slate-800 px-6 font-bold text-white transition-colors gap-2'>
                         <Image width={24} height={24} src="/GitHub_Invertocat_Black_Clearspace.png" alt='GitHub' className='invert' />
@@ -26,7 +27,7 @@ const Login = () => {
 
                 <form action={async () => {
                     "use server"
-                    await signIn("google")
+                    await signIn("google", { redirectTo: "/dashboard" })
                 }}>
                     <button type="submit" className='inline-flex h-12 items-center justify-center rounded-md border border-gray-800 bg-slate-900 hover:bg-slate-800 px-6 font-bold text-white transition-colors gap-2'>
                         <Image width={20} height={20} src="/Google__G__logo.svg" alt='Google' />

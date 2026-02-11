@@ -5,6 +5,7 @@ import Link from 'next/link'
 import GlareHover from './GlareHover'
 
 import { auth, signOut } from '@/auth'
+import { redirect } from 'next/navigation'
 
 const Navbar = async () => {
     const session = await auth()
@@ -61,7 +62,7 @@ const Navbar = async () => {
                                 <div className="border-t border-gray-700 py-1">
                                     <form action={async () => {
                                         "use server";
-                                        await signOut()
+                                        await signOut({ redirectTo: "/" })
                                     }}>
                                         <button type="submit" className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:text-red-300 transition-colors">
                                             Logout

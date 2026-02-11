@@ -36,7 +36,7 @@ Create a protected Dashboard page where users can update their profile details a
 
 3.  **Build the Form:**
     In `app/dashboard/page.tsx`, create a form that points to your server action.
-    *   Inputs needed: `name`, `username`, `image`, `coverImage`, `razorpayId`, `razorpaySecret`.
+    *   Inputs needed: `name`, `username`, `image`, `coverImage`, `cashfreeClientId`, `cashfreeClientSecret`.
     *   Use `defaultValue={user.name}` etc., to show existing data.
 
 ## Your Task

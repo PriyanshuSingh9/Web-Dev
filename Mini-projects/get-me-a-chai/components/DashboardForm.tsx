@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { updateProfile } from '@/actions/useractions';
 import { useState } from 'react';
-import { userType } from '@/types';
+import { userType } from '@/types/types';
 
 const DashboardForm = ({ user }: { user: userType }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,8 +18,8 @@ const DashboardForm = ({ user }: { user: userType }) => {
             username: user.username || "",
             image: user.image || "",
             coverImage: user.coverImage || "",
-            razorpayId: user.razorpayId || "",
-            razorpaySecret: user.razorpaySecret || "",
+            cashfreeClientId: user.cashfreeClientId || "",
+            cashfreeClientSecret: user.cashfreeClientSecret || "",
         } : {}
     })
 
@@ -87,20 +87,20 @@ const DashboardForm = ({ user }: { user: userType }) => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="razorpayId" className="text-sm font-semibold text-gray-400 ml-1">Razorpay ID</label>
+                    <label htmlFor="cashfreeClientId" className="text-sm font-semibold text-gray-400 ml-1">Cashfree Client ID</label>
                     <input
                         className="w-full bg-slate-800/50 rounded-lg border border-slate-700 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                         type="text"
-                        {...register("razorpayId")}
+                        {...register("cashfreeClientId")}
                     />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="razorpaySecret" className="text-sm font-semibold text-gray-400 ml-1">Razorpay Secret</label>
+                    <label htmlFor="cashfreeClientSecret" className="text-sm font-semibold text-gray-400 ml-1">Cashfree Client Secret</label>
                     <input
                         className="w-full bg-slate-800/50 rounded-lg border border-slate-700 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                         type="password"
-                        {...register("razorpaySecret")}
+                        {...register("cashfreeClientSecret")}
                     />
                 </div>
 

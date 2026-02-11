@@ -1,5 +1,5 @@
 import React from 'react'
-import { paymentType } from '@/types'
+import { paymentType } from '@/types/types'
 
 const Supporters = ({ payments }: { payments: paymentType[] }) => {
 

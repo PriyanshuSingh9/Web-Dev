@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { intializePayments } from '@/actions/paymentActions'
-import { userType } from '@/types'
+import { startPayment } from '@/actions/checkoutActions'
+import { userType } from '@/types/types'
 import { useSession } from 'next-auth/react'
 
 const PaymentForm = ({ username }: { username: string }) => {
@@ -24,7 +24,7 @@ const PaymentForm = ({ username }: { username: string }) => {
         }
         reset()
         try {
-            const responseData = await intializePayments(data.amount, data.to_username, currentUser, data.message)
+            const responseData = await startPayment(data.amount, data.to_username, currentUser, data.message)
             console.log("Order Created:", responseData)
         } catch (err) {
             console.error("Payment Error:", err)

@@ -3,7 +3,7 @@ import connectDB from "@/lib/db";
 import Payment from "@/models/Payment";
 import { Cashfree, CFEnvironment } from "cashfree-pg";
 import User from "@/models/User";
-import { OrderRequest, paymentType, userType } from "@/types";
+import { OrderRequest, paymentType, userType } from "@/types/types";
 
 export async function intializePayments(amount: number, to_username: string, donor: userType, message: string): Promise<any> {
     console.log("intializePayments called with:", { amount, to_username, donorName: donor?.name, donorEmail: donor?.email });
@@ -61,3 +61,4 @@ export async function intializePayments(amount: number, to_username: string, don
         throw new Error(error.response?.data?.message || error.message || "Payment initiation failed");
     }
 }
+

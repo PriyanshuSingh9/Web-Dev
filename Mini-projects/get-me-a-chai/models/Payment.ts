@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import type { paymentType } from "@/types";
+import type { paymentType } from "@/types/types";
 
 const paymentSchema = new mongoose.Schema<paymentType>({
     to_user: { type: String, required: true },

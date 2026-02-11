@@ -15,13 +15,13 @@ export interface userType {
     username: string;
     image?: string;
     coverImage?: string;
-    razorpayId?: string;
-    razorpaySecret?: string;
+    cashfreeClientId?: string;
+    cashfreeClientSecret?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-interface OrderRequest {
+export interface OrderRequest {
     order_id: string;
     order_amount: number;
     order_currency: string;

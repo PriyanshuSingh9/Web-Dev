@@ -9,7 +9,6 @@ export async function updateProfile(data: any) {
     await connectDB()
     const session = await auth()
     
-    console.log("Data received in updateProfile server action:", data); // Added console.log
     if (!session || !session.user?.email) {
         throw new Error("Unauthorized")
     }

@@ -18,12 +18,12 @@ export async function intializePayments(amount: number, to_username: string, don
     }
     const cashfree = new Cashfree(
         CFEnvironment.SANDBOX,
-        process.env.CASHFREE_CLIENT_ID!,
-        process.env.CASHFREE_CLIENT_SECRET!
+        recipient.cashfreeClientId,
+        recipient.cashfreeClientSecret
     )
 
     const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
-    const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${donor}?payment=done`
+    const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${donor.username}?payment=done&order_id=${orderId}&recipient=${to_username}`
 
     try {
         const request: OrderRequest = {
@@ -65,3 +65,47 @@ export async function intializePayments(amount: number, to_username: string, don
     }
 }
 
+export async function verifyAndUpdatePayment(orderId: string, recipientUsername: string): Promise<boolean> {
+    await connectDB();
+
+    const paymentRecord = await Payment.findOne({ order_id: orderId });
+    if (!paymentRecord) {
+        console.error("Payment record not found for orderId:", orderId);
+        return false;
+    }
+
+    if (paymentRecord.done) {
+        console.log("Payment already marked as done for orderId:", orderId);
+        return true; // Already processed
+    }
+
+    const recipient: userType | null = await User.findOne({ username: recipientUsername });
+    if (!recipient || !recipient.cashfreeClientId || !recipient.cashfreeClientSecret) {
+        console.error("Recipient or Cashfree credentials not found for username:", recipientUsername);
+        return false;
+    }
+
+    try {
+        const cashfree = new Cashfree(
+            CFEnvironment.SANDBOX, // Assuming sandbox for now, adjust as needed
+            recipient.cashfreeClientId,
+            recipient.cashfreeClientSecret
+        );
+
+        const response = await cashfree.PGFetchOrder(orderId);
+
+        if (response && response.data && response.data.order_status === "PAID") {
+            paymentRecord.done = true;
+            await paymentRecord.save();
+            console.log("Payment successfully verified and updated to done for orderId:", orderId);
+            return true;
+        } else {
+            console.warn("Payment verification failed or status not PAID for orderId:", orderId, "Status:", response?.data?.order_status);
+            return false;
+        }
+    } catch (error: any) {
+        console.error("Error verifying payment for orderId:", orderId, error);
+        console.error("Cashfree verification error details:", error.response?.data);
+        return false;
+    }
+}

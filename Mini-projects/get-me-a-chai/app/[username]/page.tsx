@@ -3,6 +3,7 @@ import User from '@/models/User';
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import connectDB from '@/lib/db';
+import { verifyAndUpdatePayment } from '@/actions/paymentActions'; // Import the new server action
 
 import PaymentForm from '@/components/PaymentForm';
 import Supporters from '@/components/Supporters';
@@ -10,31 +11,87 @@ import Supporters from '@/components/Supporters';
 import Image from 'next/image';
 import Payment from '@/models/Payment';
 
-const UserPage = async ({ params }: { params: Promise<{ username: string }> }) => {
+const UserPage = async ({
+
+    params,
+
+    searchParams,
+
+}: {
+
+    params: Promise<{ username: string }>;
+
+    searchParams: Promise<{ payment?: string; order_id?: string; recipient?: string }>;
+
+}) => {
+
     const { username } = await params;
-    const session = await auth()
+
+    const { payment, order_id, recipient } = await searchParams;
+
+
 
     await connectDB()
+
     const user = await User.findOne({ username }).lean()
 
+
+
     if (!user) {
+
         return (
+
             <div className="flex items-center justify-center min-h-screen text-white">
+
                 <h1 className="text-2xl">User not found</h1>
+
             </div>
+
         )
+
     }
 
+
+
+    // Handle post-payment verification and update
+
+    if (payment === 'done' && order_id && recipient) {
+
+        const isVerified = await verifyAndUpdatePayment(order_id, recipient);
+
+        if (isVerified) {
+
+            console.log("Payment verification successful and status updated.");
+
+        } else {
+
+            console.error("Payment verification failed or status not updated.");
+
+        }
+
+        // Redirect to clean up URL parameters, preventing re-processing on refresh
+
+        redirect(`/${username}`);
+
+    }
+
+
+
     // Fetch payments sorted by newest first and only completed ones
-    const payments = await Payment.find({ to_user: username })
+
+    const payments = await Payment.find({ to_user: username, done: true })
+
         .sort({ createdAt: -1 })
+
         .lean()
+
+
 
     return (
         <div className="w-full min-h-screen bg-black text-white pb-10">
             <div className="relative w-full h-87.5">
                 <Image
-                    src={user?.coverImage || "/default-cover.png"}
+                    src={user?.coverImage || "/default-cover.jpg"}
                     alt="Cover Image"
                     fill
                     className="object-cover"

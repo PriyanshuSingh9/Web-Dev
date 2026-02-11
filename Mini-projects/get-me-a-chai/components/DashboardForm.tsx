@@ -25,7 +25,6 @@ const DashboardForm = ({ user }: { user: userType }) => {
 
     const formSubmit = async (data: any) => {
         setIsSubmitting(true);
-        console.log("Data submitted from form:", data); // Added console.log
         try {
             await updateProfile(data);
             alert("Profile updated successfully!");

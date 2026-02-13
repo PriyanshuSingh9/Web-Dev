@@ -6,7 +6,7 @@ const Contact = () => {
         <main className="bg-slate-50 min-h-screen py-20">
             <div className="container mx-auto px-6">
                 <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
-                    
+
                     {/* Contact Info Sidebar */}
                     <div className="bg-slate-900 text-white p-12 md:w-2/5 flex flex-col justify-between">
                         <div>
@@ -14,7 +14,7 @@ const Contact = () => {
                             <p className="text-slate-400 mb-8">
                                 Have a question about our features or security? We're here to help you 24/7.
                             </p>
-                            
+
                             <div className="space-y-6">
                                 <div className="flex items-start gap-4">
                                     <div className="bg-blue-600/20 p-3 rounded-lg text-blue-400">
@@ -53,8 +53,8 @@ const Contact = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="name" className="text-sm font-bold text-slate-700 uppercase tracking-wide">Full Name</label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         id="name"
                                         placeholder="John Doe"
                                         className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -62,19 +62,19 @@ const Contact = () => {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="email" className="text-sm font-bold text-slate-700 uppercase tracking-wide">Email Address</label>
-                                    <input 
-                                        type="email" 
+                                    <input
+                                        type="email"
                                         id="email"
                                         placeholder="john@example.com"
                                         className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                     />
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col gap-2">
                                 <label htmlFor="subject" className="text-sm font-bold text-slate-700 uppercase tracking-wide">Subject</label>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     id="subject"
                                     placeholder="How can we help?"
                                     className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -83,8 +83,8 @@ const Contact = () => {
 
                             <div className="flex flex-col gap-2">
                                 <label htmlFor="message" className="text-sm font-bold text-slate-700 uppercase tracking-wide">Message</label>
-                                <textarea 
-                                    id="message" 
+                                <textarea
+                                    id="message"
                                     rows={5}
                                     placeholder="Tell us more about your inquiry..."
                                     className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none"

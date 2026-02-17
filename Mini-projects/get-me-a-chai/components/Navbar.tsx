@@ -2,10 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import GlareHover from './GlareHover'
-
 import { auth, signOut } from '@/auth'
-import { redirect } from 'next/navigation'
 
 const Navbar = async () => {
     const session = await auth()

@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
     return (
-        <nav className='flex justify-between items-center py-4 px-8 absolute bg-white text-slate-900 min-w-[90vw] z-10 rounded-full shadow-lg mx-[5vw] my-[3vh]'>
+        <nav className='flex justify-between items-center py-3 px-8 absolute bg-white text-slate-900 min-w-[90vw] z-10 rounded-full shadow-lg mx-[5vw] my-[3vh]'>
             {/* nav-left */}
             <div className='flex gap-16'>
                 {/* logo */}

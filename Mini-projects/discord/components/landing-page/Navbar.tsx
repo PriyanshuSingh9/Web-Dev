@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from '@clerk/nextjs'
 import Link from "next/link";
+import { ModeToggle } from '@/components/ui/theme-toggle';
 
 const Navbar = () => {
     return (
@@ -10,20 +11,21 @@ const Navbar = () => {
             <div className='flex items-center gap-2 cursor-pointer'>
                 <Image src="/logo.svg" alt='logo' height={36} width={36}></Image>
                 <Link href="/">
-                    <span className='text-2xl sm:text-3xl text-white font-extrabold tracking-tight'>Discord</span>
+                    <span className='text-2xl sm:text-3xl text-foreground font-extrabold tracking-tight'>Discord</span>
                 </Link>
             </div>
 
             {/* sign in / sign up */}
             <div className='flex items-center gap-3 md:gap-4'>
+                <ModeToggle />
                 <SignedOut>
                     <SignInButton>
-                        <button className="text-white hover:underline rounded-full font-medium text-sm sm:text-base px-2 sm:px-4 cursor-pointer transition-all hidden md:block">
+                        <button className="text-foreground hover:underline rounded-full font-medium text-sm sm:text-base px-2 sm:px-4 cursor-pointer transition-all hidden md:block">
                             Log In
                         </button>
                     </SignInButton>
                     <SignUpButton>
-                        <button className="bg-white text-black hover:text-indigo-600 hover:shadow-lg rounded-full font-medium text-sm sm:text-base h-10 px-4 sm:px-6 cursor-pointer transition-all duration-200">
+                        <button className="bg-primary text-primary-foreground hover:shadow-lg rounded-full font-medium text-sm sm:text-base h-10 px-4 sm:px-6 cursor-pointer transition-all duration-200">
                             Sign Up
                         </button>
                     </SignUpButton>

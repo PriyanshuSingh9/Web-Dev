@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from '@clerk/nextjs'
+import Link from "next/link";
 
 const Navbar = () => {
     return (
@@ -8,7 +9,9 @@ const Navbar = () => {
             {/* logo */}
             <div className='flex items-center gap-2 cursor-pointer'>
                 <Image src="/logo.svg" alt='logo' height={36} width={36}></Image>
-                <span className='text-2xl sm:text-3xl text-white font-extrabold tracking-tight'>Discord</span>
+                <Link href="/">
+                    <span className='text-2xl sm:text-3xl text-white font-extrabold tracking-tight'>Discord</span>
+                </Link>
             </div>
 
             {/* sign in / sign up */}
@@ -29,7 +32,9 @@ const Navbar = () => {
                 {/* Show the user button when the user is signed in */}
                 <SignedIn>
                     <div className="h-10 w-10 flex items-center justify-center">
-                        <UserButton appearance={{ elements: { userButtonAvatarBox: "h-10 w-10" } }} />
+                        <div className="flex items-center justify-center p-0.5 rounded-full border-2 border-slate-400 hover:border-indigo-500 transition-all duration-300">
+                            <UserButton appearance={{ elements: { userButtonAvatarBox: "h-10 w-10" } }} />
+                        </div>
                     </div>
                 </SignedIn>
             </div>

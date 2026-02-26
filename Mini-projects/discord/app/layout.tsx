@@ -5,6 +5,9 @@ import "./globals.css";
 import Navbar from "@/components/landing-page/Navbar";
 
 import { ClerkProvider } from '@clerk/nextjs'
+import { dark } from '@clerk/themes'
+import { ThemeProvider } from "@/components/providers/theme-provider";
+
 
 const font = DM_Sans({
   subsets: ["latin"],
@@ -22,17 +25,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <ClerkProvider appearance={{ baseTheme: dark }}>
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${font.className} antialiased`}
         >
-          <div className="min-h-screen bg-[#313338] flex flex-col">
-            <Navbar />
-            <div className="flex-1">
-              {children}
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme="dark"
+            enableSystem={false}
+            disableTransitionOnChange
+            storageKey="discord-theme">
+            <div className="min-h-screen bg-[#313338] flex flex-col">
+              <Navbar />
+              <div className="flex-1">
+                {children}
+              </div>
             </div>
-          </div>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

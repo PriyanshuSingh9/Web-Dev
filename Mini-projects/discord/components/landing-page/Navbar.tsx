@@ -1,0 +1,40 @@
+import React from 'react'
+import Image from 'next/image'
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from '@clerk/nextjs'
+
+const Navbar = () => {
+    return (
+        <nav className='flex justify-between items-center bg-transparent max-w-7xl mx-auto w-full px-6 py-4'>
+            {/* logo */}
+            <div className='flex items-center gap-2 cursor-pointer'>
+                <Image src="/logo.svg" alt='logo' height={36} width={36}></Image>
+                <span className='text-2xl sm:text-3xl text-white font-extrabold tracking-tight'>Discord</span>
+            </div>
+
+            {/* sign in / sign up */}
+            <div className='flex items-center gap-3 md:gap-4'>
+                <SignedOut>
+                    <SignInButton>
+                        <button className="text-white hover:underline rounded-full font-medium text-sm sm:text-base px-2 sm:px-4 cursor-pointer transition-all hidden md:block">
+                            Log In
+                        </button>
+                    </SignInButton>
+                    <SignUpButton>
+                        <button className="bg-white text-black hover:text-indigo-600 hover:shadow-lg rounded-full font-medium text-sm sm:text-base h-10 px-4 sm:px-6 cursor-pointer transition-all duration-200">
+                            Sign Up
+                        </button>
+                    </SignUpButton>
+                </SignedOut>
+
+                {/* Show the user button when the user is signed in */}
+                <SignedIn>
+                    <div className="h-10 w-10 flex items-center justify-center">
+                        <UserButton appearance={{ elements: { userButtonAvatarBox: "h-10 w-10" } }} />
+                    </div>
+                </SignedIn>
+            </div>
+        </nav>
+    )
+}
+
+export default Navbar

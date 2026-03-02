@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
+import { ClerkProvider } from '@clerk/nextjs'
 
 const gintoNord = localFont({
   src: [
@@ -79,22 +80,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(`${ggSans.className} ${gintoNord.variable} ${ginto.variable} ${ggSans.variable} antialiased`,
-          "bg-white dark:bg-[#313338]"
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          storageKey="discord-theme"
-          disableTransitionOnChange
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(`${ggSans.className} ${gintoNord.variable} ${ginto.variable} ${ggSans.variable} antialiased`,
+            "bg-white dark:bg-[#313338]"
+          )}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey="discord-theme"
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider >
   );
 }

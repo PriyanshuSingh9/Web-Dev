@@ -1,7 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from "next/link";
+
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 import { ModeToggle } from "@/components/ui/toggle-theme";
+import { Button } from '../ui/button';
 
 const Navbar = () => {
     return (
@@ -15,8 +18,23 @@ const Navbar = () => {
             </div>
 
             {/* sign in / sign up */}
-            <div className='flex items-center gap-3 md:gap-4'>
+            <div className='flex items-center gap-4 md:gap-4'>
                 <ModeToggle />
+                <div className='flex gap-3'>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
+                        <SignInButton>
+                            <Button>
+                                Sign In
+                            </Button>
+                        </SignInButton>
+                        <SignUpButton>
+                            Register
+                        </SignUpButton>
+                    </SignedOut>
+                </div>
             </div>
         </nav>
     )

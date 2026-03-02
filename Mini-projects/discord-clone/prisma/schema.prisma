@@ -1,8 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Run after every modification to schema
+// npx prisma generate
+// to add this schema to our node modules for safe development
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// npx prisma db push
+// to push the changes to the actual db
 
 generator client {
   provider = "prisma-client"
@@ -13,9 +14,82 @@ datasource db {
   provider = "postgresql"
 }
 
-model Profile {
+enum memberRole{
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+enum channelType{
+  TEXT
+  AUDIO
+  VIDEO
+}
+model User {
   id String @id @default(uuid())
-  username String @unique
+  clerkId String @unique
   name String
-  email String @unique
+  imageUrl String @db.Text 
+  email String @unique @db.Text
+
+  servers Server[]
+  members Member[]
+  channels Channel[]
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Server{
+  id String @id @default(uuid())
+  serverName String 
+  imageUrl String @db.Text 
+  inviteCode String @db.Text
+  
+  userId String
+  user User @relation(fields:[userId],references: [id],onDelete:Cascade )
+
+  members Member[]
+  channels Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Member{
+  id String @id @default(uuid())
+  role memberRole @default(GUEST)
+
+  userId String
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([serverId])
+}
+
+model Channel{
+  id String @id @default(uuid())
+  name String
+  type channelType @default(TEXT)
+
+  userId String
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([serverId])
 }

@@ -17,7 +17,7 @@ export default async function IdlePage() {
         }
     })
     if (server) {
-        return redirect(`/servers/${server.id}`)
+        return redirect(`/server/${server.id}`)
     }
     return (
         <div>

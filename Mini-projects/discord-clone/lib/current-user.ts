@@ -8,9 +8,9 @@ export const currentUser = async () => {
         return null
     }
 
-    const user = db.user.findUnique({
+    const user = await db.user.findUnique({
         where: {
-            id: userId
+            clerkId: userId
         }
     })
     return user

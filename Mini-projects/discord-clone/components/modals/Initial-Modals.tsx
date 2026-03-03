@@ -1,13 +1,12 @@
 "use client"
 // zod provides a way to define and check data structures at runtime.
 import * as z from "zod"
-
 // react-hook-form simplifies form state and validation.
 import { useForm } from "react-hook-form"
-
 // The resolver adapts a zod schema to react-hook-form's validation system.
 import { zodResolver } from "@hookform/resolvers/zod"
-
+import axios from "axios"
+import { useRouter } from "next/navigation"
 // These hooks are used below to avoid rendering on the server.
 import { useEffect, useState } from "react"
 
@@ -41,6 +40,8 @@ const InitialModals = () => {
         setMounted(true)
     }, [])
 
+    const router = useRouter()
+
     // Define the validation rules for our form using zod.
     // Each property corresponds to a field we expect from the user.
     const formSchema = z.object({
@@ -68,7 +69,15 @@ const InitialModals = () => {
     // This function is called when the form is successfully submitted.
     // z.infer<typeof formSchema> automatically types the data based on our schema.
     const onSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log(data)
+        try {
+            axios.post("/api/servers", data)
+            form.reset()
+            router.refresh()
+            // This is a browser API that does a hard full-page reload, reloading everything from the server.
+            window.location.reload()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     if (!mounted) {

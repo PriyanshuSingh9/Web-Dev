@@ -2,6 +2,7 @@ import React from 'react'
 import { initialUser } from '@/lib/initial-user'
 import { db } from '@/lib/db'
 import { redirect } from 'next/navigation'
+import InitialModal from '@/components/modals/Initial-Modals'
 
 export default async function IdlePage() {
     const user = await initialUser();
@@ -19,6 +20,8 @@ export default async function IdlePage() {
         return redirect(`/servers/${server.id}`)
     }
     return (
-        <div>IdlePage</div>
+        <div>
+            <InitialModal />
+        </div>
     )
 }

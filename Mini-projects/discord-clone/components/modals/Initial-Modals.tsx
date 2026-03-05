@@ -52,10 +52,12 @@ const InitialModals = () => {
             message: "Image Url is required"
         })
     })
+    // z.infer<typeof formSchema> automatically types the data based on our schema.
+    type FormData = z.infer<typeof formSchema>
 
     // Initialize the form via react-hook-form, passing our zod schema
     // for validation. defaultValues specifies initial empty strings.
-    const form = useForm({
+    const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
@@ -67,8 +69,7 @@ const InitialModals = () => {
     const isLoading = form.formState.isSubmitting
 
     // This function is called when the form is successfully submitted.
-    // z.infer<typeof formSchema> automatically types the data based on our schema.
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const onSubmit = (data: FormData) => {
         try {
             axios.post("/api/servers", data)
             form.reset()

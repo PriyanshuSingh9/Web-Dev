@@ -40,21 +40,22 @@ const FileUpload = ({
             </div >
         )
     }
-
-    return (
-        <UploadDropzone
-            endpoint={endpoint}
-            onClientUploadComplete={(res) => {
-                // res is an array of ClientUploadedFileData objects; pick the first
-                // and pass its URL (use ufsUrl or url depending on preference)
-                const url = res?.[0]?.ufsUrl
-                onChange(url)
-            }}
-            onUploadError={(error: Error) => {
-                console.log(error)
-            }}
-        />
-    )
+    else {
+        return (
+            <UploadDropzone
+                endpoint={endpoint}
+                onClientUploadComplete={(res) => {
+                    // res is an array of ClientUploadedFileData objects; pick the first
+                    // and pass its URL (use ufsUrl or url depending on preference)
+                    const url = res?.[0]?.ufsUrl
+                    onChange(url)
+                }}
+                onUploadError={(error: Error) => {
+                    console.log(error)
+                }}
+            />
+        )
+    }
 }
 
 export default FileUpload

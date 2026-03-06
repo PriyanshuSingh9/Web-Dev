@@ -20,7 +20,7 @@ enum memberRole{
   GUEST
 }
 
-enum channelType{
+enum ChannelType{
   TEXT
   AUDIO
   VIDEO
@@ -79,7 +79,7 @@ model Member{
 model Channel{
   id String @id @default(uuid())
   name String
-  type channelType @default(TEXT)
+  type ChannelType @default(TEXT)
 
   userId String
   user User @relation(fields: [userId],references: [id],onDelete: Cascade)

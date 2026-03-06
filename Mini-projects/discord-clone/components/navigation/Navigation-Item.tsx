@@ -23,7 +23,7 @@ export const NavigationItem = ({
             align="center"
             label={name}>
             <button
-                className="group relative flex items-center"
+                className="group relative flex items-center mb-2"
                 onClick={() => router.push(`/servers/${id}`)}>
                 <div
                     className={cn(

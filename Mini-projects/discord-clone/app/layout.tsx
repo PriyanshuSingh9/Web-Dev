@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from '@clerk/nextjs'
 
@@ -96,6 +97,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          <ModalProvider />
         </body>
       </html>
     </ClerkProvider >

@@ -47,7 +47,7 @@ export const NavigationSidebar = async () => {
             <UserButton
                 appearance={{
                     elements: {
-                        userButtonAvatarBox: "h-[48px] w-[48px]"
+                        userButtonAvatarBox: "h-12 w-12"
                     }
                 }}
             />

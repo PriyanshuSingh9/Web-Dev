@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex flex-col lg:flex-row items-center justify-center lg:justify-evenly min-h-[calc(100vh-74px)] p-8 md:p-12 gap-12 lg:gap-8 border-t border-[#313338] dark:border-white">
+      <main className="flex lg:flex-row items-center justify-center lg:justify-evenly min-h-[calc(100vh-74px)] p-8 md:p-12 gap-12 lg:gap-8 border-t border-[#313338] dark:border-white">
         <div className="flex flex-col gap-6 max-w-2xl text-center lg:text-left">
           <h1 className="text-foreground text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight">
             Group Chat That's All Fun & Games

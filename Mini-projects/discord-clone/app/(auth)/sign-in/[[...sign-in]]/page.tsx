@@ -1,5 +1,22 @@
-import { SignIn } from '@clerk/nextjs'
+"use client";
+
+import { SignIn } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import { useTheme } from "next-themes";
 
 export default function Page() {
-    return <SignIn />
+    const { resolvedTheme } = useTheme();
+
+    return (
+        <SignIn
+            appearance={{
+                baseTheme: resolvedTheme === "dark" ? dark : undefined,
+                elements: {
+                    cardBox: {
+                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                    },
+                },
+            }}
+        />
+    );
 }

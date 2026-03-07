@@ -4,7 +4,7 @@ import { currentUser } from "@/lib/current-user"
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { serverId: string } }
+    { params }: { params: Promise<{ serverId: string }> }
 ) {
     try {
         const user = await currentUser()
@@ -12,7 +12,7 @@ export async function PATCH(
             return new NextResponse("Unauthorised", { status: 401 })
         }
         const { serverName, imageUrl } = await req.json()
-        const serverId = params.serverId
+        const { serverId } = await params
         const server = await db.server.update({
             where: {
                 id: serverId,

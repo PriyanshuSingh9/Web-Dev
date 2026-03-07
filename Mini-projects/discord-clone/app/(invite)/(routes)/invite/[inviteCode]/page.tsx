@@ -1,26 +1,27 @@
 import { db } from "@/lib/db"
-import { currentUser } from "@clerk/nextjs/server"
+import { currentUser } from "@/lib/current-user"
 import { redirect } from "next/navigation"
 
 interface InviteCodePageProps {
-    params: {
+    params: Promise<{
         inviteCode: string
-    }
+    }>
 }
 
 const InviteCodePage = async ({ params }: InviteCodePageProps) => {
+    const { inviteCode } = await params;
     const user = await currentUser()
 
     if (!user) {
         return redirect("/idle")
     }
-    if (!params.inviteCode) {
+    if (!inviteCode) {
         return redirect("/idle")
     }
 
     const existingServer = await db.server.findFirst({
         where: {
-            inviteCode: params.inviteCode,
+            inviteCode: inviteCode,
             members: {
                 some: {
                     userId: user.id
@@ -34,7 +35,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     }
     const server = await db.server.update({
         where: {
-            inviteCode: params.inviteCode,
+            inviteCode: inviteCode,
         },
         data: {
             members: {

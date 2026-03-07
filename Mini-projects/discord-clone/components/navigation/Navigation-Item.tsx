@@ -37,7 +37,7 @@ export const NavigationItem = ({
                         "relative group flex mx-3 h-[48px] w-[48px] rounded-full group-hover:rounded-[16px] transition-all overflow-hidden",
                         params?.serverId === id && "bg-primary/10 text-primary rounded-[16px]"
                     )}>
-                    <Image src={imageUrl} fill alt="server" />
+                    <Image src={imageUrl} fill alt="server" loading="eager" />
                 </div>
             </button>
         </ActionTooltip>

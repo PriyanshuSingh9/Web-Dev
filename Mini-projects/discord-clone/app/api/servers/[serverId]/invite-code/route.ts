@@ -1,23 +1,24 @@
 import { db } from "@/lib/db"
-import { currentUser } from "@clerk/nextjs/server"
+import { currentUser } from "@/lib/current-user"
 import { NextResponse } from "next/server"
 import { v4 as uuidv4 } from "uuid"
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { serverId: string } }) {
+    { params }: { params: Promise<{ serverId: string }> }) {
     try {
+        const { serverId } = await params;
         const user = await currentUser()
         if (!user) {
             return new NextResponse("Unauthorized User", { status: 401 })
         }
-        if (!params.serverId) {
+        if (!serverId) {
             return new NextResponse("Server ID is missing", { status: 401 })
         }
         const server = await db.server.update({
             where:
             {
-                id: params.serverId,
+                id: serverId,
                 userId: user.id
             },
             data: {

@@ -74,7 +74,7 @@ const CreateChannelModal = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            const url = qs.stringify({
+            const url = qs.stringifyUrl({
                 url: "/api/channels",
                 query: { serverId: params?.serverId }
             })

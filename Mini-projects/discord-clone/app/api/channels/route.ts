@@ -11,13 +11,13 @@ export async function POST(
         const user = await currentUser()
         if (!user) return new NextResponse("Unauthorized", { status: 401 })
 
-        const { newChannelName, newChannelType } = await req.json()
+        const { name, type } = await req.json()
 
         const { searchParams } = new URL(req.url)
         const serverId = searchParams.get("serverId")
         if (!serverId) return new NextResponse("Missing Server ID", { status: 401 })
 
-        if (newChannelName === "general") {
+        if (name === "general") {
             return new NextResponse("Channel name cannot be general", { status: 401 })
         }
 
@@ -37,8 +37,8 @@ export async function POST(
                 channels: {
                     create: {
                         userId: user.id,
-                        name: newChannelName,
-                        type: newChannelType,
+                        name,
+                        type,
                     }
                 }
             }

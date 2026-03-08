@@ -77,9 +77,9 @@ const EditServerModal = () => {
 
 
     // This function is called when the form is successfully submitted.
-    const onSubmit = (data: FormData) => {
+    const onSubmit = async (data: FormData) => {
         try {
-            axios.patch(`/api/servers/${server?.id}`, data)
+            await axios.patch(`/api/servers/${server?.id}`, data)
             form.reset()
             router.refresh()
             onClose()

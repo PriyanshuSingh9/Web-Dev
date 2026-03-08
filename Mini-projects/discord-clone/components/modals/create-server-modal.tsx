@@ -66,9 +66,9 @@ const CreateServerModal = () => {
     }
 
     // This function is called when the form is successfully submitted.
-    const onSubmit = (data: FormData) => {
+    const onSubmit = async (data: FormData) => {
         try {
-            axios.post("/api/servers", data)
+            await axios.post("/api/servers", data)
             form.reset()
             router.refresh()
             onClose()

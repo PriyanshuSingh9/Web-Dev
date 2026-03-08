@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 
 import axios from "axios"
 import qs from "query-string"
-import { db } from "@/lib/db"
 
 import {
     Dialog,

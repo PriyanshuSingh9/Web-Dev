@@ -1,6 +1,10 @@
 "use client"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+
+import axios from "axios"
 import qs from "query-string"
+import { db } from "@/lib/db"
 
 import {
     Dialog,
@@ -36,7 +40,9 @@ const roleIconMap = {
 }
 
 const MembersModal = () => {
-    const { isOpen, onClose, type, data } = useModal()
+    const router = useRouter()
+
+    const { onOpen, isOpen, onClose, type, data } = useModal()
     const { server } = data as { server: ServerWithMembersWithUsers }
 
     const isModalOpen = isOpen && type === "members"
@@ -49,7 +55,34 @@ const MembersModal = () => {
     const onRoleChange = async (memberId: string, role: memberRole) => {
         try {
             setLoadingId(memberId)
+            const url = qs.stringifyUrl({
+                url: `/api/members/${memberId}`,
+                query: {
+                    serverId: server.id,
+                }
+            })
+            const response = await axios.patch(url, { role })
+            onOpen("members", { server: response.data })
+            router.refresh()
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoadingId("")
+        }
+    }
 
+    const onKick = async (memberId: string) => {
+        try {
+            setLoadingId(memberId)
+            const url = qs.stringifyUrl({
+                url: `/api/members/${memberId}`,
+                query: {
+                    serverId: server.id,
+                }
+            })
+            const response = await axios.delete(url)
+            onOpen("members", { server: response.data })
+            router.refresh()
         } catch (error) {
             console.log(error)
         } finally {
@@ -82,9 +115,12 @@ const MembersModal = () => {
                                 </div>
                                 <p className="text-xs text-zinc-500">{member.user.email}</p>
                             </div>
-                            {server.userId !== member.userId &&
-                                loadingId !== member.id && (
-                                    <div className="ml-auto">
+                            {server.userId !== member.userId && (
+                                <div className="ml-auto">
+                                    {loadingId === member.id && (
+                                        <Loader2 className="animate-spin text-zinc-500 ml-auto w-4 h-4" />
+                                    )}
+                                    {loadingId !== member.id && (
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
                                                 <MoreVertical className="h-4 w-4 text-zinc-500" />
@@ -97,14 +133,16 @@ const MembersModal = () => {
                                                     </DropdownMenuSubTrigger>
                                                     <DropdownMenuPortal>
                                                         <DropdownMenuSubContent>
-                                                            <DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                onClick={() => onRoleChange(member.id, "GUEST")}>
                                                                 <Shield className="h-4 w-4 mr-2" />
                                                                 Guest
                                                                 {member.role === "GUEST" && (
                                                                     <Check className="h-4 w-4 ml-auto" />
                                                                 )}
                                                             </DropdownMenuItem>
-                                                            <DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                onClick={() => onRoleChange(member.id, "MODERATOR")}>
                                                                 <ShieldCheck className="h-4 w-4 mr-2" />
                                                                 Moderator
                                                                 {member.role === "MODERATOR" && (
@@ -115,17 +153,17 @@ const MembersModal = () => {
                                                     </DropdownMenuPortal>
                                                 </DropdownMenuSub>
                                                 <DropdownMenuSeparator />
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem
+                                                    onClick={() => onKick(member.id)}
+                                                >
                                                     <Gavel className="h-4 w-4 mr-2" />
                                                     Kick
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
-                                        {loadingId === member.id && (
-                                            <Loader2 className="animate-spin text-zinc-500 ml-auto w-4 h-4" />
-                                        )}
-                                    </div>
-                                )}
+                                    )}
+                                </div>
+                            )}
                         </div>
                     ))}
                 </ScrollArea>

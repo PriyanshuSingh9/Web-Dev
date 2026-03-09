@@ -88,7 +88,7 @@ const EditChannelModal = () => {
             form.reset()
             onClose()
             router.refresh()
-            window.location.assign(`/servers/${server?.id}`)
+            router.push(`/servers/${server?.id}`)
         } catch (error) {
             console.log(error)
         }

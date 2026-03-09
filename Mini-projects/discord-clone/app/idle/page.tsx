@@ -14,10 +14,20 @@ export default async function IdlePage() {
                     userId: user.id
                 }
             }
+        },
+        include: {
+            channels: {
+                where: {
+                    name: "general"
+                },
+                orderBy: {
+                    createdAt: "asc"
+                }
+            }
         }
     })
     if (server) {
-        return redirect(`/servers/${server.id}`)
+        return redirect(`/servers/${server.id}/channels/${server.channels[0].id}`)
     }
     return (
         <div>

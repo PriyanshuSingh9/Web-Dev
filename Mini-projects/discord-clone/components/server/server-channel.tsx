@@ -37,7 +37,12 @@ export const ServerChannel = ({
     }
 
     const onAction = (e: React.MouseEvent, action: "editChannel" | "deleteChannel") => {
+        // Prevents the click event from bubbling up to the parent <button> 
+        // which would cause the user to accidentally navigate to the channel's URL
         e.stopPropagation();
+
+        // Opens the global modal managed by Zustand and passes the current 
+        // channel and server context into the modal's internal data state
         onOpen(action, { channel, server });
     }
 

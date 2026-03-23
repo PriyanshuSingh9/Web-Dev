@@ -1,0 +1,22 @@
+<div class="todos-page">
+  <div class="container">
+    <header class="todos-header">
+      <div class="header-top">
+        <a routerLink="/" class="btn-back">
+          <span>&larr;</span> Back to Home
+        </a>
+      </div>
+      <app-greeting [message]="todosMessage()"/>
+      <h2 class="title">{{title()}}</h2>
+    </header>
+
+    <main class="todos-main">
+      <div class="empty-state">
+        <div class="icon">📝</div>
+        <h3>No tasks yet</h3>
+        <p>Ready to start planning? Add your first task to get started.</p>
+        <button class="btn-add">Add First Task</button>
+      </div>
+    </main>
+  </div>
+</div>

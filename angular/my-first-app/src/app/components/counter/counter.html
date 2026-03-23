@@ -1,0 +1,18 @@
+<div class="counter-card">
+  <div class="count-display">
+    <span class="count-label">Current Count</span>
+    <h2 class="count-number">{{count()}}</h2>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-secondary" (click)="decrement()" aria-label="Decrement">
+      <span>&minus;</span>
+    </button>
+    <button class="btn btn-reset" (click)="reset()">
+      Reset
+    </button>
+    <button class="btn btn-primary" (click)="increment()" aria-label="Increment">
+      <span>&plus;</span>
+    </button>
+  </div>
+</div>

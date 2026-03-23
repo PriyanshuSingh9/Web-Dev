@@ -1,0 +1,73 @@
+.header {
+  background-color: #481845; /* Dark purple background matching the image */
+  padding: 16px 48px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+
+  .logo {
+    height: 48px; /* Adjust based on actual logo size */
+    object-fit: contain;
+  }
+}
+
+.nav-links-container {
+  background-color: #ffffff;
+  border-radius: 50px;
+  padding: 12px 36px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 36px;
+    align-items: center;
+
+    li {
+      a {
+        text-decoration: none;
+        color: #5d4265; /* Purple-ish text color */
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #d12e6b;
+        }
+      }
+    }
+  }
+}
+
+.cta-container {
+  .btn-start-planning {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(90deg, #c32777 0%, #db4066 100%);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+  }
+}

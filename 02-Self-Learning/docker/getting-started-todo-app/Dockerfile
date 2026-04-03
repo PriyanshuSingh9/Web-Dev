@@ -1,90 +1,76 @@
-###################################################
-# Stage: base
-# 
-# This base stage ensures all other stages are using the same base image
-# and provides common configuration for all stages, such as the working dir.
-###################################################
+# --- STAGE 1: Base Image ---
+# We use a specific version of Node.js as the foundation for all other stages.
+# Creating a 'base' stage prevents us from repeating the FROM and WORKDIR lines.
 FROM node:22 AS base
+# Set the initial working directory inside the container
 WORKDIR /usr/local/app
 
-################## CLIENT STAGES ##################
-
-###################################################
-# Stage: client-base
-#
-# This stage is used as the base for the client-dev and client-build stages,
-# since there are common steps needed for each.
-###################################################
-FROM base AS client-base
+# --- STAGE 2: Client Base ---
+# This stage handles the front-end (React/Vite) dependencies and source code.
+FROM base as client-base
+# Copy only package files first. This uses Docker's layer caching so we
+# don't re-download packages (npm install) unless these specific files change.
 COPY client/package.json client/package-lock.json ./
 RUN npm install
-COPY client/.eslintrc.cjs client/index.html client/vite.config.js ./
+# After installing dependencies, copy the rest of the frontend code.
+COPY client/index.html client/.eslintrc.cjs client/vite.config.js ./
 COPY client/public ./public
 COPY client/src ./src
 
-###################################################
-# Stage: client-dev
-# 
-# This stage is used for development of the client application. It sets 
-# the default command to start the Vite development server.
-###################################################
-FROM client-base AS client-dev
+# --- STAGE 3: Client Development ---
+# Used specifically by Docker Compose to run the app locally while you code.
+FROM client-base as client-dev
+# Run the development server (e.g., Vite)
 CMD ["npm", "run", "dev"]
 
-###################################################
-# Stage: client-build
-#
-# This stage builds the client application, producing static HTML, CSS, and
-# JS files that can be served by the backend.
-###################################################
-FROM client-base AS client-build
+# --- STAGE 4: Client Build ---
+# This stage builds the production-ready static files for the frontend.
+FROM client-base as client-build
+# Compiles the frontend code into optimized HTML/CSS/JS inside a 'dist' folder.
 RUN npm run build
 
-
-
-
-###################################################
-################  BACKEND STAGES  #################
-###################################################
-
-###################################################
-# Stage: backend-base
-#
-# This stage is used as the base for the backend-dev and test stages, since
-# there are common steps needed for each.
-###################################################
-FROM base AS backend-dev
+# --- STAGE 5: Backend Base ---
+# This stage handles the back-end (Node API) dependencies and source code.
+FROM base as backend-base
+# Copy backend package files and install dependencies
 COPY backend/package.json backend/package-lock.json ./
 RUN npm install
-COPY backend/spec ./spec
+# Copy the Node.js backend source code
 COPY backend/src ./src
+
+# --- STAGE 6: Backend Development ---
+# Used by Docker Compose to run the backend API locally while you code.
+FROM backend-base as backend-dev
+# Run the backend development server
 CMD ["npm", "run", "dev"]
 
-###################################################
-# Stage: test
-#
-# This stage runs the tests on the backend. This is split into a separate
-# stage to allow the final image to not have the test dependencies or test
-# cases.
-###################################################
-FROM backend-dev AS test
+# --- STAGE 7: Backend Testing ---
+# A dedicated stage for running automated tests.
+FROM backend-base as backend-test
+# Run tests. If this step fails, the Docker build process stops here!
 RUN npm run test
 
-###################################################
-# Stage: final
-#
-# This stage is intended to be the final "production" image. It sets up the
-# backend and copies the built client application from the client-build stage.
-#
-# It pulls the package.json and package-lock.json from the test stage to ensure that
-# the tests run (without this, the test stage would simply be skipped).
-###################################################
+# --- STAGE 8: Final Production Image ---
+# This creates the actual, lean image that will be deployed to production.
 FROM base AS final
+# Set environment to production (makes many Node.js packages run faster)
 ENV NODE_ENV=production
-COPY --from=test /usr/local/app/package.json /usr/local/app/package-lock.json ./
+
+# By copying FROM 'backend-test', we guarantee tests pass before building this stage!
+COPY --from=backend-test /usr/local/app/package.json /usr/local/app/package-lock.json ./
+
+# Install ONLY production dependencies (ignores devDependencies) to keep the image small
 RUN npm ci --production && \
     npm cache clean --force
+
+# Copy the backend source code
 COPY backend/src ./src
+# Copy the built, optimized frontend assets from the 'client-build' stage (Stage 4).
+# The backend server likely serves these static files to users.
 COPY --from=client-build /usr/local/app/dist ./src/static
+
+# Inform Docker that the container listens on port 3000
 EXPOSE 3000
+
+# Specify the command to start the production server
 CMD ["node", "src/index.js"]
